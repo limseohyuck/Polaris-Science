@@ -4,16 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>폴라리스 사이언스 | 학부모 결제 페이지</title>
-  <meta name="description" content="폴라리스 사이언스 수강료 안내 및 결제 링크 페이지" />
+  <meta name="description" content="폴라리스 사이언스 수강료 안내 및 결제 페이지" />
   <style>
     :root{
       --bg:#0b1220; --card:#121a2b; --text:#eaf0ff; --muted:#b8c4e6;
-      --line:rgba(255,255,255,.12); --accent:#8ab4ff; --good:#3ddc97;
-      --warn:#ffd166; --danger:#ff6b6b;
+      --line:rgba(255,255,255,.12); --accent:#8ab4ff;
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans KR",sans-serif;background:linear-gradient(180deg,#0b1220,#070b14);color:var(--text)}
-    a{color:inherit}
     .wrap{max-width:980px;margin:0 auto;padding:18px 14px 56px}
     .top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
     .brand{display:flex;gap:12px;align-items:center}
@@ -44,17 +42,21 @@
       cursor:pointer; user-select:none;
     }
     .btn.primary{border:none;background:linear-gradient(135deg,#3f6cff,#8ab4ff);color:#061022}
-    .btn.good{border:none;background:linear-gradient(135deg,#1ea97c,#3ddc97);color:#04110c}
-    .btn.warn{border:none;background:linear-gradient(135deg,#f7b733,#ffd166);color:#1a1200}
-    .btn.danger{border:none;background:linear-gradient(135deg,#ff4d6d,#ff6b6b);color:#19070c}
-    .btn:active{transform:scale(.99)}
+    .btn.gray{opacity:.85}
+    .btn.disabled{opacity:.55;filter:saturate(.2);cursor:not-allowed}
     .divider{height:1px;background:var(--line);margin:12px 0}
     .notice{padding:12px;border-radius:14px;border:1px dashed var(--line);background:rgba(255,255,255,.03);color:var(--muted);font-size:13px;line-height:1.6}
-    .kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-      font-size:12px;border:1px solid var(--line);padding:2px 7px;border-radius:10px;color:var(--muted)}
     .footer{margin-top:16px;color:var(--muted);font-size:12.5px;line-height:1.75;border-top:1px solid var(--line);padding-top:14px}
     .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
-    .tag{display:inline-block;font-size:12px;color:var(--muted);border:1px solid var(--line);padding:5px 10px;border-radius:999px;margin-right:6px;margin-top:6px}
+    dialog{
+      width:min(520px,92vw); border:none; border-radius:18px;
+      padding:0; background:#0f172a; color:var(--text);
+      box-shadow:0 25px 80px rgba(0,0,0,.55);
+    }
+    .dlg-hd{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+    .dlg-bd{padding:14px 16px}
+    .dlg-ft{padding:14px 16px;border-top:1px solid var(--line);display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .x{background:transparent;border:1px solid var(--line);color:var(--text);border-radius:12px;padding:7px 10px;cursor:pointer}
   </style>
 </head>
 <body>
@@ -67,14 +69,14 @@
           <div class="small">학부모 결제 안내 페이지 (모바일 최적화)</div>
         </div>
       </div>
-      <span class="pill">📌 결제 전 확인: 수업명 · 월(4회) · 학생명</span>
+      <span class="pill">📌 결제 전 확인: 학생명 · 수업명 · 결제월(4회)</span>
     </div>
 
     <section class="card hero">
-      <h2>수강료 확인 → 결제 링크 클릭</h2>
+      <h2>수강료 확인 → 결제 버튼 클릭</h2>
       <p>
-        아래에서 해당 수업을 선택하신 뒤 <b>“토스 결제하기”</b>를 눌러 결제를 진행해 주세요.<br/>
-        결제 후 카톡/문자로 <span class="kbd">학생명</span>과 <span class="kbd">수업명</span>을 보내주시면 등록이 완료됩니다.
+        아래에서 해당 수업을 선택하신 뒤 <b>“결제하기”</b>를 눌러 주세요.<br/>
+        결제 후 카톡/문자로 <b>학생명 / 수업명</b>을 보내주시면 등록이 완료됩니다.
       </p>
 
       <div class="divider"></div>
@@ -88,58 +90,39 @@
 
     <div class="grid">
 
-      <!-- 과정 카드 1 -->
+      <!-- 과정 1 -->
       <section class="card span4 course">
         <div class="course-title">중등과학 영역별 개념시작 반</div>
         <div class="meta">4H · (실험 및 이론) · 월 4회</div>
         <div class="price">240,000원</div>
         <div class="row">
-          <!-- TODO: 아래 href를 '실제 토스 결제링크'로 교체 -->
-          <a class="btn primary" href="https://toss.me/CHANGE_THIS_LINK_240" target="_blank" rel="noopener">토스 결제하기</a>
-          <button class="btn" onclick="copyText('중등과학 개념시작(4H) 240,000원')">수업명 복사</button>
+          <a id="btn240" class="btn primary" href="#" onclick="return pay('240')">결제하기</a>
+          <a class="btn gray" href="sms:010-8384-6322?&body=%5B%ED%8F%B4%EB%9D%BC%EB%A6%AC%EC%8A%A4%20%EC%82%AC%EC%9D%B4%EC%96%B8%EC%8A%A4%5D%0A%ED%95%99%EC%83%9D%EB%AA%85%3A%20%0A%EC%88%98%EC%97%85%EB%AA%85%3A%20%EC%A4%91%EB%93%B1%EA%B3%BC%ED%95%99%20%EA%B0%9C%EB%85%90%EC%8B%9C%EC%9E%91(4H)%0A%EA%B2%B0%EC%A0%9C%EC%9B%94%3A%20%0A%EC%9A%94%EC%B2%AD%EC%82%AC%ED%95%AD%3A%20" >문자 템플릿</a>
         </div>
-        <div class="small">* 결제 후 “학생명/수업명”을 문자로 보내주세요.</div>
+        <div class="small">* 토스 결제링크 발급 전에는 “결제하기” 클릭 시 안내창이 뜹니다.</div>
       </section>
 
-      <!-- 과정 카드 2 -->
+      <!-- 과정 2 -->
       <section class="card span4 course">
         <div class="course-title">중등과학 심화 / 고등과학 선행 반</div>
         <div class="meta">3H · 월 4회</div>
         <div class="price">220,000원</div>
         <div class="row">
-          <!-- TODO: 실제 토스 결제링크로 교체 -->
-          <a class="btn primary" href="https://toss.me/CHANGE_THIS_LINK_220A" target="_blank" rel="noopener">토스 결제하기</a>
-          <button class="btn" onclick="copyText('중등심화/고등선행(3H) 220,000원')">수업명 복사</button>
+          <a id="btn220a" class="btn primary" href="#" onclick="return pay('220A')">결제하기</a>
+          <a class="btn gray" href="sms:010-8384-6322?&body=%5B%ED%8F%B4%EB%9D%BC%EB%A6%AC%EC%8A%A4%20%EC%82%AC%EC%9D%B4%EC%96%B8%EC%8A%A4%5D%0A%ED%95%99%EC%83%9D%EB%AA%85%3A%20%0A%EC%88%98%EC%97%85%EB%AA%85%3A%20%EC%A4%91%EB%93%B1%EC%8B%AC%ED%99%94%2F%EA%B3%A0%EB%93%B1%EC%84%A0%ED%96%89(3H)%0A%EA%B2%B0%EC%A0%9C%EC%9B%94%3A%20%0A%EC%9A%94%EC%B2%AD%EC%82%AC%ED%95%AD%3A%20" >문자 템플릿</a>
         </div>
-        <div class="small">* 결제 후 “학생명/수업명”을 문자로 보내주세요.</div>
       </section>
 
-      <!-- 과정 카드 3 -->
+      <!-- 과정 3 -->
       <section class="card span4 course">
         <div class="course-title">영재입시 심화 유형풀이 반</div>
-        <div class="meta">3H · 주2회 수업 구성 가능 · 월 4회 기준</div>
+        <div class="meta">3H · 월 4회 기준</div>
         <div class="price">220,000원</div>
         <div class="row">
-          <!-- TODO: 실제 토스 결제링크로 교체 -->
-          <a class="btn primary" href="https://toss.me/CHANGE_THIS_LINK_220B" target="_blank" rel="noopener">토스 결제하기</a>
-          <button class="btn" onclick="copyText('영재입시 유형(3H) 220,000원')">수업명 복사</button>
+          <a id="btn220b" class="btn primary" href="#" onclick="return pay('220B')">결제하기</a>
+          <a class="btn gray" href="sms:010-8384-6322?&body=%5B%ED%8F%B4%EB%9D%BC%EB%A6%AC%EC%8A%A4%20%EC%82%AC%EC%9D%B4%EC%96%B8%EC%8A%A4%5D%0A%ED%95%99%EC%83%9D%EB%AA%85%3A%20%0A%EC%88%98%EC%97%85%EB%AA%85%3A%20%EC%98%81%EC%9E%AC%EC%9E%85%EC%8B%9C%20%EC%9C%A0%ED%98%95(3H)%0A%EA%B2%B0%EC%A0%9C%EC%9B%94%3A%20%0A%EC%9A%94%EC%B2%AD%EC%82%AC%ED%95%AD%3A%20" >문자 템플릿</a>
         </div>
         <div class="small">* 주2회 동시 수강 시 각 200,000원 (상담 후 적용)</div>
-      </section>
-
-      <!-- 계좌이체 안내 -->
-      <section class="card span6">
-        <h3>계좌이체 안내</h3>
-        <div class="notice">
-          계좌이체로 결제 원하시는 경우, 아래 연락처로 문의해 주세요.<br/>
-          <b>010-8384-6322</b> (문자/전화) · <b>yio02@naver.com</b><br/>
-          <span class="small">* 입금자명은 “학생명” 또는 “학생명+과목”으로 부탁드립니다.</span>
-        </div>
-        <div class="row" style="margin-top:10px">
-          <a class="btn good" href="tel:010-8384-6322">전화하기</a>
-          <a class="btn" href="sms:010-8384-6322">문자 보내기</a>
-          <a class="btn" href="mailto:yio02@naver.com">이메일</a>
-        </div>
       </section>
 
       <!-- 환불규정 -->
@@ -147,64 +130,85 @@
         <h3>환불 규정</h3>
         <ul>
           <li>환불은 「학원의 설립·운영 및 과외교습에 관한 법률」 및 관계 법령/지침을 준수합니다.</li>
-          <li>결제 단위는 <b>1개월(4회)</b>이며, 환불은 <b>진행된 수업 회차</b> 기준으로 산정합니다.</li>
+          <li>결제 단위: <b>1개월(4회)</b></li>
           <li>수강 시작 전: <b>전액 환불</b></li>
-          <li>수강 시작 후: <b>진행 회차에 해당하는 금액 및 교재비(해당 시)</b>를 제외하고 환불</li>
-          <li>환불 요청은 문자/카카오톡/이메일 등 <b>기록이 남는 방식</b>으로 접수합니다.</li>
+          <li>수강 시작 후: <b>진행 회차 및 교재비(해당 시)</b>를 제외하고 환불</li>
+          <li>환불 요청: 문자/카카오톡/이메일 등 <b>기록이 남는 방식</b>으로 접수</li>
         </ul>
-        <div class="notice" style="margin-top:10px">
-          * 정확한 환불 금액은 결제내역(과정/기간/회차) 기준으로 안내드립니다.
-        </div>
       </section>
 
-      <!-- 사업자 정보 -->
-      <section class="card span12" id="business">
+      <!-- 사업자정보 -->
+      <section class="card span6" id="business">
         <h3>사업자 정보</h3>
-        <div class="tag">상호명: 폴라리스 사이언스</div>
-        <div class="tag">대표자: 임서혁</div>
-        <div class="tag">사업자등록번호: <span class="mono">602-41-43962</span></div>
-        <div class="tag">통신판매업 신고번호: 해당없음</div>
-        <div style="margin-top:10px" class="notice">
-          사업장 주소: 서울특별시 송파구 백제고분로 170 6층 B-01호<br/>
-          연락처: 010-8384-6322 · 이메일: yio02@naver.com
-        </div>
-      </section>
-
-      <!-- 개인정보 안내 -->
-      <section class="card span12">
-        <h3>개인정보 처리 안내(간단)</h3>
         <div class="notice">
-          상담/수강 등록을 위해 필요한 최소한의 개인정보(학생 성명, 보호자 연락처, 학년 등)만 수집하며,
-          수집 목적 달성 후 지체 없이 파기합니다. 법령에 따라 보관이 필요한 경우 해당 기간 동안 안전하게 보관합니다.
+          상호명: 폴라리스 사이언스<br/>
+          대표자: 임서혁<br/>
+          사업자등록번호: <span class="mono">602-41-43962</span><br/>
+          통신판매업 신고번호: 해당없음<br/>
+          주소: 서울특별시 송파구 백제고분로 170 6층 B-01호<br/>
+          연락처: 010-8384-6322 · 이메일: yio02@naver.com
         </div>
       </section>
 
     </div>
 
     <div class="footer">
-      <b>폴라리스 사이언스</b><br/>
-      대표: 임서혁 | 사업자등록번호: <span class="mono">602-41-43962</span> | 통신판매업: 해당없음<br/>
-      주소: 서울특별시 송파구 백제고분로 170 6층 B-01호<br/>
-      연락처: 010-8384-6322 | 이메일: yio02@naver.com<br/>
       © Polaris Science. All rights reserved.
     </div>
   </div>
 
+  <!-- 안내 팝업 -->
+  <dialog id="dlg">
+    <div class="dlg-hd">
+      <div><b>결제 안내</b></div>
+      <button class="x" onclick="document.getElementById('dlg').close()">닫기</button>
+    </div>
+    <div class="dlg-bd" id="dlgBody"></div>
+    <div class="dlg-ft">
+      <a class="btn" href="tel:010-8384-6322">전화하기</a>
+      <a class="btn" href="sms:010-8384-6322">문자 보내기</a>
+      <button class="btn primary" onclick="document.getElementById('dlg').close()">확인</button>
+    </div>
+  </dialog>
+
   <script>
-    function copyText(text){
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(()=>alert("복사 완료: " + text));
-      } else {
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        ta.style.position = "fixed";
-        ta.style.left = "-9999px";
-        document.body.appendChild(ta);
-        ta.focus(); ta.select();
-        try { document.execCommand("copy"); alert("복사 완료: " + text); }
-        catch(e){ alert("복사 실패. 길게 눌러 복사해 주세요."); }
-        document.body.removeChild(ta);
+    // ✅ 토스 결제링크 발급되면 여기만 채우면 끝!
+    // 예: TOSS_LINKS["240"] = "https://toss.me/xxxxxx";
+    const TOSS_LINKS = {
+      "240": "",
+      "220A": "",
+      "220B": ""
+    };
+
+    function pay(code){
+      const map = {
+        "240": "중등과학 개념시작(4H) 240,000원",
+        "220A": "중등심화/고등선행(3H) 220,000원",
+        "220B": "영재입시 유형(3H) 220,000원"
+      };
+      const course = map[code] || "선택한 과정";
+
+      const link = (TOSS_LINKS[code] || "").trim();
+      if (link) {
+        window.open(link, "_blank", "noopener");
+        return false;
       }
+
+      // 링크 없으면 안내 팝업
+      const body = `
+        <div style="color:#b8c4e6;line-height:1.7">
+          현재 <b>카드결제 링크가 준비 중</b>입니다.<br/>
+          아래 방법 중 편하신 방식으로 진행해 주세요.<br/><br/>
+          ✅ <b>방법 1)</b> 문자로 “학생명/수업명/결제월” 보내기<br/>
+          ✅ <b>방법 2)</b> 전화 상담 후 결제 안내 받기<br/><br/>
+          선택 과정: <b>${course}</b><br/><br/>
+          <span style="font-size:12.5px;opacity:.9">
+          * 토스 결제링크 발급 후 이 페이지의 결제 버튼이 바로 결제창으로 연결됩니다.
+          </span>
+        </div>`;
+      document.getElementById("dlgBody").innerHTML = body;
+      document.getElementById("dlg").showModal();
+      return false;
     }
   </script>
 </body>
