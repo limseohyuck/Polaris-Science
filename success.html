@@ -1,19 +1,44 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<title>결제 완료</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>결제 완료 | Polaris Science</title>
+  <style>
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans KR","맑은 고딕",sans-serif;background:#0b1220;color:rgba(255,255,255,.92)}
+    .wrap{max-width:720px;margin:0 auto;padding:28px 18px}
+    .card{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);border-radius:18px;padding:18px}
+    .muted{color:rgba(255,255,255,.65);font-size:13px;line-height:1.6}
+    .ok{font-weight:900;font-size:20px;margin:0 0 8px}
+    .btn{display:inline-block;margin-top:12px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#fff;text-decoration:none}
+    pre{white-space:pre-wrap;word-break:break-word;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.12);padding:12px;border-radius:12px}
+  </style>
 </head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <p class="ok">결제가 완료되었습니다.</p>
+    <p class="muted">등록 확인을 위해 <b>학생명 / 수업명 / 결제월</b>을 문자(또는 카톡)로 보내주세요.</p>
 
-<body style="background:#0b1220;color:white;font-family:sans-serif;padding:40px">
+    <div class="muted" style="margin-top:10px">입력 정보</div>
+    <pre id="info" class="muted"></pre>
 
-<h2>결제가 완료되었습니다.</h2>
+    <a class="btn" href="./">홈으로</a>
+    <a class="btn" href="./pay.html">추가 결제</a>
+  </div>
+</div>
 
-<p>Polaris Science</p>
-
-<p>등록 확인을 위해 학원으로 연락 주세요.</p>
-
-<a href="/">홈으로</a>
-
+<script>
+  const qs = new URLSearchParams(location.search);
+  const data = {
+    studentName: qs.get("studentName"),
+    className: qs.get("className"),
+    payMonth: qs.get("payMonth"),
+    parentName: qs.get("parentName"),
+    phone: qs.get("phone"),
+    memo: qs.get("memo")
+  };
+  document.getElementById("info").textContent = JSON.stringify(data, null, 2);
+</script>
 </body>
 </html>
