@@ -10,16 +10,31 @@
     .card{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);border-radius:18px;padding:18px}
     .muted{color:rgba(255,255,255,.65);font-size:13px;line-height:1.6}
     .btn{display:inline-block;margin-top:12px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#fff;text-decoration:none}
+    pre{white-space:pre-wrap;word-break:break-word;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.12);padding:12px;border-radius:12px}
   </style>
 </head>
 <body>
 <div class="wrap">
   <div class="card">
     <h2 style="margin:0 0 8px">결제가 취소되었거나 실패했습니다.</h2>
-    <p class="muted">다시 시도하시거나, 문제가 지속되면 학원으로 연락 주세요. :contentReference[oaicite:7]{index=7}</p>
+    <p class="muted">다시 시도하시거나, 문제가 지속되면 학원으로 연락 주세요.</p>
+    <pre id="out" class="muted"></pre>
     <a class="btn" href="./pay.html">다시 결제</a>
     <a class="btn" href="./">홈으로</a>
   </div>
 </div>
+
+<script>
+  const qs = new URLSearchParams(location.search);
+  const data = {
+    code: qs.get("code"),
+    message: qs.get("message"),
+    orderId: qs.get("orderId"),
+    payMonth: qs.get("payMonth"),
+    studentName: qs.get("studentName"),
+    className: qs.get("className")
+  };
+  document.getElementById("out").textContent = JSON.stringify(data, null, 2);
+</script>
 </body>
 </html>
