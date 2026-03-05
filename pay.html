@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Polaris Science | 수강료 결제</title>
   <meta name="description" content="폴라리스 사이언스 학부모 수강료 결제 페이지" />
+
+  <!-- ✅ TossPayments Standard v2 -->
   <script src="https://js.tosspayments.com/v2/standard"></script>
+
   <style>
     :root{
       --bg:#0b1220; --card:rgba(255,255,255,.07); --line:rgba(255,255,255,.14);
@@ -86,6 +89,7 @@
     a:hover{text-decoration:underline}
   </style>
 </head>
+
 <body>
 <div class="wrap">
   <div class="top">
@@ -115,7 +119,7 @@
 
       <section class="card">
         <h3>1) 결제 항목 선택</h3>
-        <p class="hint">사이트에 안내된 수강료 기준으로 구성했습니다. (월 4회 기준) :contentReference[oaicite:2]{index=2}</p>
+        <p class="hint">사이트에 안내된 수강료 기준으로 구성했습니다. (월 4회 기준)</p>
         <div class="opts" id="opts"></div>
 
         <div class="row" style="margin-top:12px">
@@ -156,14 +160,14 @@
         <label style="margin-top:10px">
           <input type="checkbox" id="agree" />
           <span style="color:rgba(255,255,255,.82);font-size:12.5px">
-            환불 규정 및 오프라인 수업 안내를 확인했고 동의합니다. :contentReference[oaicite:3]{index=3}
+            환불 규정 및 오프라인 수업 안내를 확인했고 동의합니다.
           </span>
         </label>
 
         <div class="toast" id="toast"></div>
 
         <div class="notice">
-          <b>환불 규정(요약)</b> :contentReference[oaicite:4]{index=4}<br/>
+          <b>환불 규정(요약)</b><br/>
           • 수강 시작 전: 전액 환불<br/>
           • 수강 시작 후: 진행된 수업을 제외한 금액 환불<br/>
           <span style="color:rgba(255,255,255,.65)">자세한 내용은 학원 안내 및 관련 법령/지침을 따릅니다.</span>
@@ -177,14 +181,15 @@
         <div class="kv"><div class="k">주문번호</div><div class="v" id="sumOrderId">-</div></div>
         <div class="kv"><div class="k">결제 금액</div><div class="v price" id="sumPrice">₩ 0</div></div>
 
-        <button class="btn" id="payBtn">토스 결제 진행</button>
+        <!-- ✅ onclick 추가(강제) + JS addEventListener도 함께 사용 -->
+        <button class="btn" id="payBtn" onclick="pay()">토스 결제 진행</button>
         <button class="small" id="copyBtn">결제정보 복사(학부모/내부기록)</button>
 
         <div class="notice">
-          <b>문의</b> :contentReference[oaicite:5]{index=5}<br/>
+          <b>문의</b><br/>
           • 전화: 010-8384-6322<br/>
           • 이메일: yio02@naver.com<br/><br/>
-          <b>사업자 정보</b> :contentReference[oaicite:6]{index=6}<br/>
+          <b>사업자 정보</b><br/>
           • 대표자: 임서혁<br/>
           • 사업자등록번호: 602-41-43962<br/>
           • 주소: 서울특별시 송파구 백제고분로 170 6층 B-01호
@@ -200,25 +205,28 @@
 </div>
 
 <script>
-  // ✅ (중요) Client Key: 테스트키/라이브키로 바꿔서 사용
-  const TOSS_CLIENT_KEY = "test_gck_docs_0vk5rk1EwkEbP0W43n07xlzm"; // 승인 후 live_gck_...로 교체
+  /**
+   * ✅ 꼭 확인
+   * - Vercel 도메인/깃허브페이지 중 어디서 테스트하느냐에 따라
+   *   토스 "허용 도메인"과 "테스트/라이브 키"가 맞아야 결제창이 뜹니다.
+   */
 
-  // ✅ Vercel(서버리스) confirm 엔드포인트 (아래 2번에서 만들 예정)
-  // 배포 후: https://<your-vercel-app>.vercel.app/api/confirm
-  const CONFIRM_ENDPOINT = "https://YOUR-VERCEL-APP.vercel.app/api/confirm";
+  // ✅ Client Key (테스트 → test_gck..., 실결제 → live_gck...)
+  const TOSS_CLIENT_KEY = "test_gck_docs_0vk5rk1EwkEbP0W43n07xlzm";
 
-  const tossPayments = TossPayments(TOSS_CLIENT_KEY);
+  // ✅ confirm API (이미 만들었으니 실제 주소로 고정)
+  const CONFIRM_ENDPOINT = "https://polaris-science.vercel.app/api/confirm";
+
+  const el = (id)=>document.getElementById(id);
+  const opts = el("opts");
+  const toast = el("toast");
+  const classNameInput = el("className");
 
   const items = [
     { id:"m1", name:"중등과학 개념반", amount:240000, desc:"4시간 · 월 4회" },
     { id:"m2", name:"중등과학 심화 / 고등선행", amount:220000, desc:"3시간 · 월 4회" },
     { id:"m3", name:"영재입시 유형반", amount:220000, desc:"3시간 · 월 4회" }
   ];
-
-  const el = (id)=>document.getElementById(id);
-  const opts = el("opts");
-  const toast = el("toast");
-  const className = el("className");
 
   let selected = items[0];
   let orderId = makeOrderId();
@@ -233,75 +241,126 @@
     toast.textContent = msg;
     toast.className = "toast show" + (bad ? " bad" : "");
   }
-  function clear(){ toast.className="toast"; toast.textContent=""; }
-  function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+  function clearToast(){ toast.className="toast"; toast.textContent=""; }
+  function esc(s){
+    return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+  }
 
-  function render(){
+  function updateSummary(){
+    el("sumItem").textContent = selected.name;
+    el("sumOrderId").textContent = orderId;
+    el("sumPrice").textContent = won(selected.amount);
+    classNameInput.value = selected.name;
+  }
+
+  function renderOptions(){
     opts.innerHTML="";
     items.forEach(it=>{
       const d=document.createElement("div");
       d.className="opt"+(it.id===selected.id?" active":"");
       d.innerHTML = `<div class="t1">${esc(it.name)}</div>
                      <div class="t2">${esc(it.desc)} · <b>${won(it.amount)}</b></div>`;
-      d.onclick=()=>{ selected=it; className.value=it.name; update(); render(); };
+      d.onclick=()=>{
+        selected=it;
+        updateSummary();
+        renderOptions();
+        clearToast();
+      };
       opts.appendChild(d);
     });
-    className.value = selected.name;
   }
 
-  function update(){
-    el("sumItem").textContent = selected.name;
-    el("sumOrderId").textContent = orderId;
-    el("sumPrice").textContent = won(selected.amount);
-    clear();
-  }
-
-  async function pay(){
+  function validate(){
     const parentName = el("parentName").value.trim();
     const phone = el("phone").value.trim();
     const student = el("studentName").value.trim();
     const month = el("payMonth").value.trim();
-    const memo = el("memo").value.trim();
     const agreed = el("agree").checked;
 
-    if(!agreed) return show("동의 체크가 필요합니다.", true);
-    if(!parentName) return show("학부모 성함을 입력해 주세요.", true);
-    if(!phone) return show("연락처를 입력해 주세요.", true);
-    if(!student) return show("학생명을 입력해 주세요.", true);
-    if(!month) return show("결제월을 입력해 주세요. (예: 2026-03)", true);
+    if(!agreed) return { ok:false, msg:"동의 체크가 필요합니다." };
+    if(!parentName) return { ok:false, msg:"학부모 성함을 입력해 주세요." };
+    if(!phone) return { ok:false, msg:"연락처를 입력해 주세요." };
+    if(!student) return { ok:false, msg:"학생명을 입력해 주세요." };
+    if(!month) return { ok:false, msg:"결제월을 입력해 주세요. (예: 2026-03)" };
 
-    // 주문명은 과도한 개인정보 포함 지양 (학생명은 success 페이지에서 내부 기록으로 처리 권장)
+    return { ok:true, parentName, phone, student, month };
+  }
+
+  async function pay(){
+    console.log("pay() clicked");
+
+    // ✅ TossPayments 로드 체크
+    if (typeof TossPayments !== "function") {
+      show("결제 모듈 로딩 실패: 네트워크/차단(광고차단기) 여부를 확인해 주세요.", true);
+      return;
+    }
+
+    // ✅ 키 형식 체크(실수 방지)
+    if (!TOSS_CLIENT_KEY || (!TOSS_CLIENT_KEY.startsWith("test_gck_") && !TOSS_CLIENT_KEY.startsWith("live_gck_"))) {
+      show("Client Key 설정이 올바르지 않습니다. (test_gck_ 또는 live_gck_ 로 시작해야 함)", true);
+      return;
+    }
+
+    const v = validate();
+    if(!v.ok) return show(v.msg, true);
+
+    const parentName = v.parentName;
+    const phone = v.phone;
+    const student = v.student;
+    const month = v.month;
+    const memo = el("memo").value.trim();
+
+    // ✅ 안전한 URL 생성 (어디서 열어도 100% 맞음)
+    const baseUrl = new URL(".", window.location.href).href;
+    const successUrlBase = baseUrl + "success.html";
+    const failUrlBase = baseUrl + "fail.html";
+
+    // ✅ success/fail 페이지로 넘길 추가 정보(결제 승인에 필요한 paymentKey/orderId/amount는 토스가 자동으로 쿼리에 붙여줌)
+    const meta = new URLSearchParams({
+      parentName,
+      phone,
+      studentName: student,
+      className: selected.name,
+      payMonth: month,
+      memo: memo || ""
+    }).toString();
+
+    const successUrl = successUrlBase + "?" + meta;
+    const failUrl = failUrlBase + "?" + meta;
+
+    // ✅ 주문명: 과도한 개인정보는 피하고, 수업+월 정도만
     const orderName = `${selected.name} (${month})`;
 
-    // successUrl / failUrl (GitHub Pages에 올린 파일로 연결)
-    const successUrl = `${location.origin}${location.pathname.replace("pay.html","")}success.html`;
-    const failUrl    = `${location.origin}${location.pathname.replace("pay.html","")}fail.html`;
-
-    // success 페이지에서 confirm 호출에 쓸 메타 (쿼리로 넘김)
-    const meta = new URLSearchParams({
-      parentName, phone, studentName: student, className: selected.name, payMonth: month, memo
-    }).toString();
+    // ✅ 결제 객체 생성(클릭 시점에 생성해도 되고, 미리 생성해도 됨)
+    const tossPayments = TossPayments(TOSS_CLIENT_KEY);
 
     try{
       el("payBtn").disabled = true;
-      show("결제창을 여는 중입니다…", false);
+      show("결제창을 여는 중입니다… (팝업 차단이 있으면 허용해 주세요)", false);
 
       await tossPayments.requestPayment({
         method: "CARD",
         amount: { currency:"KRW", value: selected.amount },
         orderId,
         orderName,
-        successUrl: successUrl + "?" + meta,
-        failUrl: failUrl + "?" + meta,
+        successUrl,
+        failUrl,
         customerName: parentName
       });
-    }catch(e){
-      show("결제가 취소되었거나 오류가 발생했습니다. 다시 시도해 주세요.", true);
+
+      // requestPayment가 성공하면 페이지가 이동(리다이렉트)되므로 보통 아래 코드는 실행되지 않음
+    } catch (e) {
+      console.error(e);
+      show("결제가 취소되었거나 오류가 발생했습니다. (팝업 차단/키/도메인 설정을 확인)", true);
       el("payBtn").disabled = false;
     }
   }
 
+  // ✅ addEventListener도 추가(이중 안전장치)
   el("payBtn").addEventListener("click", pay);
+
+  // ✅ onclick에서 호출 가능하도록 전역 노출
+  window.pay = pay;
 
   el("copyBtn").addEventListener("click", async ()=>{
     const text = [
@@ -313,7 +372,11 @@
       `- 연락처: ${el("phone").value.trim() || "-"}`,
       `- 학생명: ${el("studentName").value.trim() || "-"}`,
       `- 결제월: ${el("payMonth").value.trim() || "-"}`,
+      `- 메모: ${el("memo").value.trim() || "-"}`,
+      ``,
+      `confirm API: ${CONFIRM_ENDPOINT}`
     ].join("\n");
+
     try{
       await navigator.clipboard.writeText(text);
       show("복사 완료! (학부모 안내/내부 기록용)", false);
@@ -323,7 +386,8 @@
   });
 
   el("year").textContent = new Date().getFullYear();
-  render(); update();
+  renderOptions();
+  updateSummary();
 </script>
 </body>
 </html>
