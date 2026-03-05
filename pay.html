@@ -4,7 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>수강/결제 안내 | 폴라리스 사이언스</title>
-  <meta name="description" content="폴라리스 사이언스 학부모 결제 안내 페이지" />
+  <meta name="description" content="폴라리스 사이언스 수강료 선택 후 토스페이먼츠로 결제" />
+
+  <!-- Toss Payments Payment Widget SDK -->
+  <script src="https://js.tosspayments.com/v2/standard"></script>
 
   <style>
     :root{
@@ -25,13 +28,13 @@
       --brand:#4d86ff;
       --brand2:#6fb2ff;
 
+      --ok:#35d07f;
+      --warn:#ffcc66;
+
       --radius: 18px;
       --shadow: 0 18px 48px rgba(0,0,0,.48);
       --shadow2: 0 10px 30px rgba(0,0,0,.36);
-
-      --ok:#35d07f;
     }
-
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
@@ -45,14 +48,11 @@
       overflow-x:hidden;
     }
     a{color:inherit; text-decoration:none}
-    .wrap{max-width:1120px; margin:0 auto; padding:26px 18px 60px;}
+    .wrap{max-width:1120px; margin:0 auto; padding:26px 18px 64px;}
 
-    /* Top header (small) */
+    /* top bar */
     .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
       padding:10px 12px;
       border-radius: 999px;
       background: rgba(8, 14, 26, .65);
@@ -61,10 +61,7 @@
       backdrop-filter: blur(10px);
     }
     .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width:260px;
+      display:flex; align-items:center; gap:12px; min-width:260px;
     }
     .dot{
       width:34px; height:34px;
@@ -77,9 +74,7 @@
     .brand .txt span{display:block; font-size:12px; color:var(--muted2)}
 
     .chip{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
+      display:inline-flex; align-items:center; gap:8px;
       padding:9px 12px;
       border-radius: 999px;
       background: rgba(255,255,255,.06);
@@ -97,7 +92,7 @@
       font-style:normal;
     }
 
-    /* Big intro panel */
+    /* hero */
     .hero{
       margin-top:16px;
       padding:22px;
@@ -106,20 +101,12 @@
       border:1px solid var(--stroke);
       box-shadow: var(--shadow);
     }
-    .hero h1{
-      margin:0 0 8px;
-      font-size:26px;
-      letter-spacing:-.6px;
-    }
-    .hero p{
-      margin:0;
-      color: var(--muted);
-      line-height:1.7;
-      font-size:14.5px;
-    }
+    .hero h1{margin:0 0 8px; font-size:26px; letter-spacing:-.6px;}
+    .hero p{margin:0; color: var(--muted); line-height:1.7; font-size:14.5px;}
+
     .notice{
       margin-top:14px;
-      padding:14px 14px;
+      padding:14px;
       border-radius: 14px;
       border:1px dashed rgba(255,255,255,.16);
       background: rgba(255,255,255,.05);
@@ -149,7 +136,7 @@
     }
     .notice a{color: #7fb0ff; font-weight:900; text-decoration:underline; text-underline-offset:3px;}
 
-    /* Sections */
+    /* sections */
     .section{
       margin-top:18px;
       padding:18px;
@@ -165,7 +152,7 @@
       color: rgba(150,190,255,.95);
     }
 
-    /* Table */
+    /* price table + radio */
     .tablewrap{
       overflow:auto;
       border-radius: 14px;
@@ -175,7 +162,7 @@
     table{
       width:100%;
       border-collapse: collapse;
-      min-width: 680px;
+      min-width: 820px;
     }
     thead th{
       text-align:center;
@@ -183,116 +170,163 @@
       font-size:13px;
       color: rgba(255,255,255,.86);
       border-bottom:1px solid var(--stroke);
+      white-space:nowrap;
     }
     tbody td{
       padding:12px 10px;
       font-size:14px;
       color: rgba(255,255,255,.86);
       border-bottom:1px solid rgba(255,255,255,.07);
+      vertical-align:middle;
     }
     tbody tr:last-child td{border-bottom:none;}
-    tbody td:first-child{font-weight:800;}
-    tbody td:nth-child(2), tbody td:nth-child(3){text-align:center; font-weight:700;}
-    tbody td:nth-child(3){color: rgba(255,255,255,.92);}
+    tbody td:nth-child(1){width:64px; text-align:center;}
+    tbody td:nth-child(2){font-weight:850;}
+    tbody td:nth-child(3), tbody td:nth-child(4){text-align:center; font-weight:700;}
+    tbody td:nth-child(5){text-align:center; font-weight:950; color: rgba(255,255,255,.92);}
     .footnote{
       margin-top:10px;
       color: var(--muted);
       font-size:13px;
       line-height:1.6;
     }
+    .radio{
+      width:18px; height:18px;
+      accent-color: var(--brand);
+      cursor:pointer;
+    }
 
-    /* Cards for classes */
-    .cards{
+    /* form + widget layout */
+    .grid2{
       margin-top:16px;
       display:grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap:14px;
     }
     @media (max-width: 980px){
-      .cards{grid-template-columns:1fr;}
-      table{min-width: 560px;}
+      .grid2{grid-template-columns:1fr;}
+      table{min-width: 700px;}
     }
 
-    .card{
+    .panelBox{
       padding:18px;
       border-radius: 18px;
-      background: linear-gradient(180deg, rgba(18,28,50,.78), rgba(12,20,38,.82));
+      background: linear-gradient(180deg, rgba(18,28,50,.78), rgba(12,20,38,.84));
       border:1px solid rgba(255,255,255,.12);
       box-shadow: 0 18px 40px rgba(0,0,0,.40);
-      position:relative;
-      overflow:hidden;
     }
-    .card::before{
-      content:"";
-      position:absolute;
-      inset:-40px -60px auto auto;
-      width:180px; height:180px;
-      background: radial-gradient(circle at 30% 30%, rgba(77,134,255,.22), transparent 60%),
-                  radial-gradient(circle at 70% 70%, rgba(111,178,255,.14), transparent 60%);
-      border-radius: 50%;
-      filter: blur(0.5px);
-      opacity:.95;
-      pointer-events:none;
-    }
-    .card h3{
-      margin:0 0 8px;
+    .panelBox h3{
+      margin:0 0 12px;
       font-size:18px;
       letter-spacing:-.3px;
     }
-    .meta{
-      color: var(--muted);
-      font-size:13.5px;
-      line-height:1.5;
-    }
-    .price{
-      margin-top:10px;
-      font-size:22px;
-      font-weight:950;
-      letter-spacing:-.3px;
-    }
-    .actions{
-      margin-top:12px;
+
+    .field{
       display:flex;
-      gap:10px;
-      flex-wrap:wrap;
+      flex-direction:column;
+      gap:8px;
+      margin-bottom:12px;
     }
-    .btn{
+    label{
+      font-size:13px;
+      color: var(--muted);
+      font-weight:800;
+    }
+    input{
+      height:44px;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding:0 12px;
+      outline:none;
+    }
+    input::placeholder{color: rgba(255,255,255,.42);}
+    input:focus{border-color: rgba(111,178,255,.55); box-shadow: 0 0 0 3px rgba(111,178,255,.12);}
+
+    .summary{
+      margin-top:10px;
+      padding:12px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.05);
+      border:1px dashed rgba(255,255,255,.14);
+      color: rgba(255,255,255,.78);
+      line-height:1.7;
+      font-size:13.5px;
+    }
+    .summary b{color: rgba(255,255,255,.92);}
+
+    .refundBox{
+      margin-top:12px;
+      padding:12px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .refundBox ul{
+      margin:0;
+      padding-left:18px;
+      color: var(--muted);
+      font-size:13.8px;
+      line-height:1.85;
+    }
+    .agreeRow{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-top:10px;
+      color: rgba(255,255,255,.82);
+      font-weight:850;
+      font-size:13.5px;
+    }
+    .agreeRow input{width:18px; height:18px; accent-color: var(--ok);}
+
+    /* widget containers */
+    .widgetArea{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .widgetShell{
+      padding:14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .hint{
+      color: var(--muted2);
+      font-size:12.8px;
+      line-height:1.6;
+    }
+    .warn{
+      color: rgba(255,204,102,.92);
+      font-weight:850;
+    }
+
+    .payBtn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      padding:10px 14px;
-      border-radius: 12px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      font-weight:900;
-      cursor:pointer;
-      user-select:none;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
-      white-space:nowrap;
-    }
-    .btn:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,.10);
-      border-color: rgba(255,255,255,.18);
-    }
-    .btn.primary{
+      height:48px;
+      border-radius: 14px;
       border:none;
       background: linear-gradient(135deg, var(--brand), var(--brand2));
       color:#0b1020;
       font-weight:950;
+      font-size:15px;
+      cursor:pointer;
+      transition: transform .12s ease, filter .12s ease;
+      user-select:none;
     }
-    .btn.primary:hover{filter: brightness(1.03);}
-
-    .hint{
-      margin-top:10px;
-      color: rgba(255,255,255,.65);
-      font-size:12.8px;
-      line-height:1.6;
+    .payBtn:hover{transform: translateY(-1px); filter: brightness(1.03);}
+    .payBtn:disabled{
+      cursor:not-allowed;
+      filter: grayscale(60%);
+      opacity:.55;
+      transform:none;
     }
-    .hint strong{color: rgba(210,230,255,.92);}
 
-    /* Two-column bottom panels */
+    /* business + footer */
     .bottom{
       margin-top:16px;
       display:grid;
@@ -302,27 +336,6 @@
     @media (max-width: 980px){
       .bottom{grid-template-columns:1fr;}
     }
-
-    .panel{
-      padding:18px;
-      border-radius: 18px;
-      background: linear-gradient(180deg, rgba(18,28,50,.78), rgba(12,20,38,.84));
-      border:1px solid rgba(255,255,255,.12);
-      box-shadow: 0 18px 40px rgba(0,0,0,.40);
-    }
-    .panel h3{
-      margin:0 0 12px;
-      font-size:18px;
-      letter-spacing:-.3px;
-    }
-    .panel ul{
-      margin:0;
-      padding-left:18px;
-      color: var(--muted);
-      font-size:14px;
-      line-height:1.8;
-    }
-    .panel li b{color: rgba(255,255,255,.90);}
     .bizbox{
       margin-top:8px;
       padding:14px;
@@ -335,7 +348,6 @@
     }
     .bizbox b{color: rgba(255,255,255,.90);}
 
-    /* footer */
     .footerline{
       margin-top:18px;
       border-top:1px solid rgba(255,255,255,.10);
@@ -344,216 +356,359 @@
       font-size:12.5px;
     }
   </style>
-
-  <script>
-    // === 수업 데이터 (표 + 카드에서 같이 사용) ===
-    const PRODUCTS = {
-      basic: {
-        name: "중등과학 영역별 개념시작 반",
-        time: "4H · (실험 및 이론) · 월 4회",
-        priceText: "240,000원"
-      },
-      adv: {
-        name: "중등과학 심화 / 고등과학 선행 반",
-        time: "3H · 월 4회",
-        priceText: "220,000원"
-      },
-      gifted: {
-        name: "영재입시 심화 유형풀이 반",
-        time: "3H · 월 4회 기준",
-        priceText: "220,000원",
-        note: "* 주2회 동시 수강 시 각 200,000원 (상담 후 적용)"
-      }
-    };
-
-    function showPayGuide(productKey){
-      const p = PRODUCTS[productKey];
-      const msg =
-`[결제 안내]
-선택 수업: ${p.name}
-수업 단위: 1개월(4회) 기준
-결제 후 카톡/문자로 학생명 / 수업명을 보내주시면 등록이 완료됩니다.
-
-문의: 010-8384-6322 / yio02@naver.com
-
-※ 토스 결제링크 발급 전에는 '결제하기' 클릭 시 안내창만 표시됩니다.`;
-      alert(msg);
-    }
-
-    function openSmsTemplate(productKey){
-      const p = PRODUCTS[productKey];
-      const body =
-`폴라리스 사이언스 결제/등록 요청
-학생명: 
-수업명: ${p.name}
-결제일: 
-(확인 부탁드립니다.)`;
-      // 모바일은 sms:가 잘 열리고, PC는 복사 안내로 대체
-      const smsUrl = "sms:?&body=" + encodeURIComponent(body);
-      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-      if(isMobile){
-        window.location.href = smsUrl;
-      }else{
-        navigator.clipboard?.writeText(body).then(() => {
-          alert("문자 템플릿이 클립보드에 복사되었습니다.\n\n" + body);
-        }).catch(() => {
-          alert("아래 템플릿을 복사해 문자로 보내주세요.\n\n" + body);
-        });
-      }
-    }
-  </script>
 </head>
 
 <body>
   <div class="wrap">
-    <!-- top bar -->
     <div class="topbar">
       <div class="brand">
         <div class="dot" aria-hidden="true"></div>
         <div class="txt">
           <b>폴라리스 사이언스</b>
-          <span>학부모 결제 안내 페이지 (모바일 최적화)</span>
+          <span>수강료 선택 후 결제 (토스페이먼츠)</span>
         </div>
       </div>
       <div class="chip" title="결제 전 확인">
-        <i>📌</i> 결제 전 확인: 학생명 · 수업명 · 결제월(4회)
+        <i>📌</i> 결제 전 확인: 학부모 정보 · 학생명 · 결제월(4회)
       </div>
     </div>
 
-    <!-- hero -->
     <section class="hero">
-      <h1>수강료 확인 → 결제 버튼 클릭</h1>
+      <h1>수강료 선택 → 정보 입력 → 동의 후 결제</h1>
       <p>
-        아래에서 해당 수업을 선택하신 뒤 <b>“결제하기”</b>를 눌러 주세요.<br/>
-        결제 후 카톡/문자로 <b>학생명 / 수업명</b>을 보내주시면 등록이 완료됩니다.
+        아래 표에서 수업 항목을 선택하고, 학부모/학생 정보를 입력한 뒤<br/>
+        <b>환불 규정 동의</b> 및 <b>약관 동의</b> 후 결제를 진행해 주세요.
       </p>
 
       <div class="notice">
-        <div class="row">
-          <div class="check"></div>
-          <div>결제 단위: <b>1개월(4회)</b> 기준</div>
+        <div class="row"><div class="check"></div><div>결제 단위: <b>1개월(4회)</b> 기준</div></div>
+        <div class="row"><div class="check"></div><div>문의: <a href="tel:01083846322">010-8384-6322</a> / <a href="mailto:yio02@naver.com">yio02@naver.com</a></div></div>
+        <div class="row"><div class="check"></div><div class="hint"><span class="warn">※</span> 결제 성공 시 <code>success.html</code>로 이동 후, 서버에서 결제 승인(Confirm) 처리가 필요합니다.</div></div>
+      </div>
+    </section>
+
+    <section class="section" id="price">
+      <h2>프로그램별 수강료 (선택)</h2>
+
+      <div class="tablewrap">
+        <table aria-label="수강료 표">
+          <thead>
+            <tr>
+              <th>선택</th>
+              <th>수업 항목</th>
+              <th>수업시간</th>
+              <th>월 기준</th>
+              <th>금액</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input class="radio" type="radio" name="product" value="A" /></td>
+              <td>중등과학 영역별 개념시작 반</td>
+              <td>4H (실험 및 이론)</td>
+              <td>월 4회</td>
+              <td>240,000원</td>
+            </tr>
+            <tr>
+              <td><input class="radio" type="radio" name="product" value="B" /></td>
+              <td>중등과학 심화/고등과학 선행 통합반</td>
+              <td>3H</td>
+              <td>월 4회</td>
+              <td>220,000원</td>
+            </tr>
+            <tr>
+              <td><input class="radio" type="radio" name="product" value="C" /></td>
+              <td>영재입시 중등심화 유형풀이반</td>
+              <td>3H</td>
+              <td>월 4회</td>
+              <td>220,000원</td>
+            </tr>
+            <tr>
+              <td><input class="radio" type="radio" name="product" value="D" /></td>
+              <td>영재입시 고등과학 영역별 선행 반</td>
+              <td>3H (실험 및 이론)</td>
+              <td>월 4회</td>
+              <td>220,000원</td>
+            </tr>
+            <tr>
+              <td><input class="radio" type="radio" name="product" value="E" /></td>
+              <td>주2회 영재입시 (중등심화 유형풀이 + 고등과학 영역별 선행)</td>
+              <td>각 3H</td>
+              <td>월 8회</td>
+              <td>400,000원</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="footnote">
+        ※ 월 기준은 기본 <b>4회</b>입니다. (주2회 항목은 월 <b>8회</b> 기준)<br/>
+        ※ 결제 후 카톡/문자로 <b>학부모명 / 학생명 / 수업 항목</b>을 보내주시면 등록이 완료됩니다.
+      </div>
+
+      <div class="grid2">
+        <!-- LEFT: buyer info + refund agreement -->
+        <div class="panelBox">
+          <h3>학부모/학생 정보</h3>
+
+          <div class="field">
+            <label for="parentName">학부모 이름</label>
+            <input id="parentName" type="text" placeholder="예) 홍길동" autocomplete="name" />
+          </div>
+
+          <div class="field">
+            <label for="parentPhone">학부모 연락처</label>
+            <input id="parentPhone" type="tel" placeholder="예) 010-1234-5678" autocomplete="tel" inputmode="tel" />
+          </div>
+
+          <div class="field">
+            <label for="studentName">학생 이름</label>
+            <input id="studentName" type="text" placeholder="예) 김OO" />
+          </div>
+
+          <div class="summary" id="summary">
+            선택된 수업: <b>없음</b><br/>
+            결제 금액: <b>0원</b>
+          </div>
+
+          <div class="refundBox">
+            <div style="font-weight:950; margin-bottom:8px;">환불 규정 안내</div>
+            <ul>
+              <li>환불은 <b>「학원의 설립·운영 및 과외교습에 관한 법률」</b> 및 관계 법령/지침을 준수합니다.</li>
+              <li>결제 단위: <b>1개월(4회)</b> (주2회 항목은 1개월(8회))</li>
+              <li>수강 시작 전: <b>전액 환불</b></li>
+              <li>수강 시작 후: <b>진행 회차 및 교재비(해당 시)를 제외</b>하고 환불</li>
+              <li>환불 요청: <b>문자/카카오톡/이메일</b> 등 기록이 남는 방식으로 접수</li>
+            </ul>
+
+            <div class="agreeRow">
+              <input id="refundAgree" type="checkbox" />
+              <label for="refundAgree" style="margin:0; cursor:pointer; color:rgba(255,255,255,.86);">
+                환불 규정을 확인했으며 이에 동의합니다.
+              </label>
+            </div>
+          </div>
         </div>
-        <div class="row">
-          <div class="check"></div>
-          <div>결제 방식: <b>카드결제(토스) / 계좌이체</b></div>
-        </div>
-        <div class="row">
-          <div class="check"></div>
-          <div>
-            문의:
-            <a href="tel:01083846322">010-8384-6322</a>
-            &nbsp;/&nbsp;
-            <a href="mailto:yio02@naver.com">yio02@naver.com</a>
+
+        <!-- RIGHT: Toss widget -->
+        <div class="panelBox">
+          <h3>결제</h3>
+
+          <div class="widgetArea">
+            <div class="widgetShell">
+              <div style="font-weight:900; margin-bottom:10px; color:rgba(255,255,255,.86);">결제 수단</div>
+              <div id="payment-method"></div>
+              <div class="hint" style="margin-top:8px;">
+                카드/계좌이체 등 결제수단은 토스 위젯 설정에 따라 표시됩니다.
+              </div>
+            </div>
+
+            <div class="widgetShell">
+              <div style="font-weight:900; margin-bottom:10px; color:rgba(255,255,255,.86);">약관 동의</div>
+              <div id="agreement"></div>
+              <div class="hint" style="margin-top:8px;">
+                결제 진행을 위해 기본 약관 동의가 필요합니다.
+              </div>
+            </div>
+
+            <button id="payButton" class="payBtn" disabled>결제하기</button>
+
+            <div class="hint">
+              결제 버튼이 비활성화되어 있으면: <br/>
+              ① 수업 선택 ② 학부모/학생 정보 입력 ③ 환불규정 동의 체크를 확인해 주세요.
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Tuition table section -->
-    <section class="section">
-      <h2>수강료 안내</h2>
-      <div class="tablewrap">
-        <table aria-label="수강료 표">
-          <thead>
-            <tr>
-              <th>수업</th>
-              <th>시간</th>
-              <th>월 수강료</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>중등과학 개념반</td>
-              <td>4시간</td>
-              <td>240,000원</td>
-            </tr>
-            <tr>
-              <td>중등과학 심화 / 고등선행</td>
-              <td>3시간</td>
-              <td>220,000원</td>
-            </tr>
-            <tr>
-              <td>영재입시 유형반</td>
-              <td>3시간</td>
-              <td>220,000원</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="footnote">※ 수업은 월 4회 기준입니다.</div>
-    </section>
-
-    <!-- 3 product cards -->
-    <section class="cards" aria-label="결제 카드">
-      <article class="card">
-        <h3>중등과학 영역별 개념시작 반</h3>
-        <div class="meta">4H · (실험 및 이론) · 월 4회</div>
-        <div class="price">240,000원</div>
-
-        <div class="actions">
-          <button class="btn primary" onclick="showPayGuide('basic')">결제하기</button>
-          <button class="btn" onclick="openSmsTemplate('basic')">문자 템플릿</button>
-        </div>
-
-        <div class="hint">
-          * 토스 결제링크 발급 전에는 <strong>“결제하기”</strong> 클릭 시 안내창이 뜹니다.
-        </div>
-      </article>
-
-      <article class="card">
-        <h3>중등과학 심화 / 고등과학 선행 반</h3>
-        <div class="meta">3H · 월 4회</div>
-        <div class="price">220,000원</div>
-
-        <div class="actions">
-          <button class="btn primary" onclick="showPayGuide('adv')">결제하기</button>
-          <button class="btn" onclick="openSmsTemplate('adv')">문자 템플릿</button>
-        </div>
-      </article>
-
-      <article class="card">
-        <h3>영재입시 심화 유형풀이 반</h3>
-        <div class="meta">3H · 월 4회 기준</div>
-        <div class="price">220,000원</div>
-
-        <div class="actions">
-          <button class="btn primary" onclick="showPayGuide('gifted')">결제하기</button>
-          <button class="btn" onclick="openSmsTemplate('gifted')">문자 템플릿</button>
-        </div>
-
-        <div class="hint">
-          * 주2회 동시 수강 시 각 <strong>200,000원</strong> (상담 후 적용)
-        </div>
-      </article>
-    </section>
-
-    <!-- bottom two panels -->
-    <section class="bottom" aria-label="환불 규정 및 사업자 정보">
-      <div class="panel">
-        <h3>환불 규정</h3>
-        <ul>
-          <li>환불은 <b>「학원의 설립·운영 및 과외교습에 관한 법률」</b> 및 관계 법령/지침을 준수합니다.</li>
-          <li>결제 단위: <b>1개월(4회)</b></li>
-          <li>수강 시작 전: <b>전액 환불</b></li>
-          <li>수강 시작 후: <b>진행 회차 및 교재비(해당 시)를 제외</b>하고 환불</li>
-          <li>환불 요청: <b>문자/카카오톡/이메일</b> 등 기록이 남는 방식으로 접수</li>
-        </ul>
-      </div>
-
-      <div class="panel">
+    <section class="bottom" aria-label="사업자 정보">
+      <div class="panelBox">
         <h3>사업자 정보</h3>
         <div class="bizbox">
-          상호명: <b>폴라리스 사이언스</b><br/>
+          상호명: <b>폴라리스(Polaris) 사이언스</b><br/>
           대표자: <b>임서혁</b><br/>
           사업자등록번호: <b>602-41-43692</b><br/>
           통신판매업 신고번호: <b>해당없음</b><br/>
-          주소: <b>서울특별시 송파구 백제고분로 170 6층 B-01호</b><br/>
+          주소: <b>서울특별시 송파구 백제고분로 170, 6층 B-01호</b><br/>
           연락처: <b>010-8384-6322</b> · 이메일: <b>yio02@naver.com</b>
+        </div>
+      </div>
+
+      <div class="panelBox">
+        <h3>안내</h3>
+        <div class="bizbox">
+          폴라리스 사이언스의 자세한 소식은 네이버블로그를 통해 접하실 수 있습니다.<br/>
+          <a href="https://blog.naver.com/yio02" target="_blank" rel="noopener" style="color:#7fb0ff; font-weight:950; text-decoration:underline; text-underline-offset:3px;">
+            https://blog.naver.com/yio02
+          </a>
         </div>
       </div>
     </section>
 
     <div class="footerline">© Polaris Science. All rights reserved.</div>
   </div>
+
+  <script>
+    /**************************************************************
+     * 1) 토스 위젯 설정 (반드시 교체!)
+     **************************************************************/
+    const TOSS_CLIENT_KEY = "test_ck_ZLKGPx4M3MqNM5RP5nAd3BaWypv1"; // 예: test_gck_... 또는 live_gck_...
+    // customerKey는 "구매자 고유키" 입니다. 데모/간단 구현은 랜덤을 쓰되,
+    // 실제 운영에서는 회원/학부모 단위로 일관된 고유키를 쓰는 걸 권장합니다.
+    const customerKey = "cust_" + Math.random().toString(16).slice(2);
+
+    // ⚠️ 실제 도메인으로 바꾸세요 (로컬/파일:// 에서는 결제 리다이렉트가 막히는 경우가 많습니다)
+    const SUCCESS_URL = window.location.origin + "/success.html";
+    const FAIL_URL = window.location.origin + "/fail.html";
+
+    /**************************************************************
+     * 2) 상품 데이터
+     **************************************************************/
+    const PRODUCTS = {
+      A: { orderName: "중등과학 영역별 개념시작 반 (월 4회)", amount: 240000 },
+      B: { orderName: "중등과학 심화/고등과학 선행 통합반 (월 4회)", amount: 220000 },
+      C: { orderName: "영재입시 중등심화 유형풀이반 (월 4회)", amount: 220000 },
+      D: { orderName: "영재입시 고등과학 영역별 선행 반 (월 4회)", amount: 220000 },
+      E: { orderName: "주2회 영재입시(중등심화+고등선행) (월 8회)", amount: 400000 }
+    };
+
+    /**************************************************************
+     * 3) 상태
+     **************************************************************/
+    let selectedKey = null;
+    let selectedAmount = 0;
+    let selectedOrderName = "";
+
+    const elSummary = document.getElementById("summary");
+    const elPayBtn = document.getElementById("payButton");
+    const elParentName = document.getElementById("parentName");
+    const elParentPhone = document.getElementById("parentPhone");
+    const elStudentName = document.getElementById("studentName");
+    const elRefundAgree = document.getElementById("refundAgree");
+
+    function formatKRW(n){
+      return n.toLocaleString("ko-KR") + "원";
+    }
+
+    function updateSummary(){
+      if(!selectedKey){
+        elSummary.innerHTML = `선택된 수업: <b>없음</b><br/>결제 금액: <b>0원</b>`;
+        return;
+      }
+      elSummary.innerHTML = `선택된 수업: <b>${selectedOrderName}</b><br/>결제 금액: <b>${formatKRW(selectedAmount)}</b>`;
+    }
+
+    function isReady(){
+      const nameOk = (elParentName.value || "").trim().length >= 2;
+      const phoneOk = (elParentPhone.value || "").trim().length >= 9;
+      const studentOk = (elStudentName.value || "").trim().length >= 2;
+      const productOk = !!selectedKey;
+      const refundOk = elRefundAgree.checked;
+      return nameOk && phoneOk && studentOk && productOk && refundOk;
+    }
+
+    function updatePayButton(){
+      elPayBtn.disabled = !isReady();
+    }
+
+    /**************************************************************
+     * 4) 토스 위젯 렌더 + 금액 업데이트
+     *    - 결제수단/약관 UI 렌더
+     *    - 상품 선택 시 amount 업데이트
+     **************************************************************/
+    let widgets = null;
+
+    async function initTossWidget(){
+      if(!TOSS_CLIENT_KEY || TOSS_CLIENT_KEY.includes("test_ck_ZLKGPx4M3MqNM5RP5nAd3BaWypv1")){
+        // 운영 중에는 alert 대신, 관리자용 안내 문구로 바꿔도 됨
+        console.warn("TOSS_CLIENT_KEY를 설정해 주세요.");
+      }
+
+      // TossPayments SDK v2: loadPayments → paymentWidget
+      // (문서에서 안내하는 결제위젯 연동 방식 기준) :contentReference[oaicite:2]{index=2}
+      const tossPayments = TossPayments(TOSS_CLIENT_KEY);
+      widgets = tossPayments.widgets({ customerKey });
+
+      // 초기 금액은 0 (선택 후 setAmount)
+      await widgets.setAmount({ currency: "KRW", value: 0 });
+
+      // 결제수단/약관 렌더
+      await widgets.renderPaymentMethods({
+        selector: "#payment-method",
+        variantKey: "DEFAULT"
+      });
+
+      await widgets.renderAgreement({
+        selector: "#agreement",
+        variantKey: "AGREEMENT"
+      });
+    }
+
+    async function applySelectedProduct(){
+      if(!widgets || !selectedKey) return;
+      await widgets.setAmount({ currency: "KRW", value: selectedAmount });
+    }
+
+    /**************************************************************
+     * 5) 이벤트 바인딩
+     **************************************************************/
+    document.querySelectorAll("input[name='product']").forEach(r => {
+      r.addEventListener("change", async (e) => {
+        selectedKey = e.target.value;
+        selectedAmount = PRODUCTS[selectedKey].amount;
+        selectedOrderName = PRODUCTS[selectedKey].orderName;
+        updateSummary();
+        updatePayButton();
+        await applySelectedProduct();
+      });
+    });
+
+    [elParentName, elParentPhone, elStudentName, elRefundAgree].forEach(el => {
+      el.addEventListener("input", updatePayButton);
+      el.addEventListener("change", updatePayButton);
+    });
+
+    /**************************************************************
+     * 6) 결제 요청
+     **************************************************************/
+    function makeOrderId(){
+      // orderId는 상점에서 유일해야 합니다.
+      // 실제 운영에서는 서버에서 생성/관리 권장.
+      return "order_" + Date.now() + "_" + Math.random().toString(16).slice(2);
+    }
+
+    elPayBtn.addEventListener("click", async () => {
+      if(!isReady()){
+        alert("수업 선택/정보 입력/환불 동의 확인 후 결제해 주세요.");
+        return;
+      }
+      if(!widgets){
+        alert("결제 위젯이 아직 준비되지 않았습니다. 잠시 후 다시 시도해 주세요.");
+        return;
+      }
+
+      const orderId = makeOrderId();
+
+      // 결제 요청: 성공 시 successUrl, 실패 시 failUrl로 리다이렉트 :contentReference[oaicite:3]{index=3}
+      await widgets.requestPayment({
+        orderId,
+        orderName: selectedOrderName,
+        successUrl: SUCCESS_URL,
+        failUrl: FAIL_URL,
+        customerName: (elParentName.value || "").trim(),
+        customerMobilePhone: (elParentPhone.value || "").trim().replaceAll("-", ""),
+        // customerEmail은 선택이지만 있으면 심사/관리 측면에서 유리할 수 있음
+        customerEmail: "yio02@naver.com"
+      });
+    });
+
+    /**************************************************************
+     * 7) 초기화
+     **************************************************************/
+    updateSummary();
+    updatePayButton();
+    initTossWidget();
+  </script>
 </body>
 </html>
