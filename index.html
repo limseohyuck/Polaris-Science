@@ -3,19 +3,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Polaris Science Academy</title>
-  <meta name="description" content="폴라리스 사이언스 아카데미 - 영재/심화 과학교육, 탐구·대회·영재원·과학고 대비" />
+  <title>POLARIS SCIENCE ACADEMY</title>
+  <meta name="description" content="폴라리스 사이언스 아카데미 - 영재/심화 과학, 탐구·대회·영재원·과학고 대비" />
+
   <style>
     :root{
       --bg1:#f7fbff;
       --bg2:#eaf6ff;
       --ink:#0b1b2b;
       --muted:#4b647a;
-      --card:#ffffffcc;
+      --card:#ffffffde;
       --stroke:#d6e7f7;
       --brand:#1f74ff;
       --brand2:#22b7ff;
-      --shadow: 0 12px 35px rgba(10, 30, 60, .10);
+      --shadow: 0 12px 34px rgba(10, 30, 60, .10);
       --radius: 18px;
     }
     *{box-sizing:border-box}
@@ -24,21 +25,23 @@
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;
       color:var(--ink);
       background:
-        radial-gradient(1200px 600px at 15% 15%, #ffffff 0%, transparent 55%),
-        radial-gradient(900px 500px at 85% 20%, #dff2ff 0%, transparent 55%),
+        radial-gradient(1100px 560px at 15% 15%, #ffffff 0%, transparent 58%),
+        radial-gradient(900px 520px at 85% 18%, #dff2ff 0%, transparent 58%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
       min-height:100vh;
     }
     a{color:inherit; text-decoration:none}
-    .wrap{max-width:1100px; margin:0 auto; padding:28px 18px 56px;}
+    .wrap{max-width:1120px; margin:0 auto; padding:26px 18px 56px;}
+
+    /* Header */
     .topbar{
       display:flex; align-items:center; justify-content:space-between;
       gap:14px;
       padding:12px 14px;
-      background:rgba(255,255,255,.75);
+      background:rgba(255,255,255,.80);
       border:1px solid var(--stroke);
       border-radius:999px;
-      box-shadow: 0 8px 24px rgba(10,30,60,.07);
+      box-shadow: 0 8px 22px rgba(10,30,60,.08);
       backdrop-filter: blur(8px);
       position:sticky; top:12px; z-index:10;
     }
@@ -47,7 +50,8 @@
       min-width:220px;
     }
     .brand img{
-      width:40px; height:40px; border-radius:12px;
+      width:40px; height:40px;
+      border-radius:12px;
       object-fit:contain;
       background:#fff;
       border:1px solid var(--stroke);
@@ -56,9 +60,7 @@
     .brand .txt{line-height:1.1}
     .brand .txt b{display:block; font-size:14px; letter-spacing:.2px}
     .brand .txt span{display:block; font-size:12px; color:var(--muted)}
-    .nav{
-      display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
-    }
+    .nav{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;}
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
       gap:8px;
@@ -67,40 +69,31 @@
       border:1px solid var(--stroke);
       background:#fff;
       color:var(--ink);
-      font-weight:700;
+      font-weight:800;
       box-shadow: 0 10px 22px rgba(10,30,60,.06);
-      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+      transition: transform .15s ease, box-shadow .15s ease;
       cursor:pointer;
       white-space:nowrap;
     }
-    .btn:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 16px 30px rgba(10,30,60,.10);
-      background:#ffffff;
-    }
+    .btn:hover{transform:translateY(-1px); box-shadow: 0 16px 28px rgba(10,30,60,.10);}
     .btn.primary{
-      border:none;
-      color:#fff;
+      border:none; color:#fff;
       background: linear-gradient(135deg, var(--brand), var(--brand2));
       box-shadow: 0 14px 30px rgba(31,116,255,.22);
     }
     .btn.primary:hover{box-shadow: 0 18px 36px rgba(31,116,255,.28);}
-    .btn.ghost{
-      background: rgba(255,255,255,.65);
-      backdrop-filter: blur(6px);
-    }
+    .btn.ghost{background:rgba(255,255,255,.72);}
 
+    /* Layout */
     .hero{
-      margin-top:20px;
+      margin-top:18px;
       display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap:18px;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
       align-items:stretch;
     }
-    @media (max-width: 920px){
-      .hero{grid-template-columns:1fr; }
-      .brand{min-width:auto}
-    }
+    @media (max-width: 940px){ .hero{grid-template-columns:1fr;} .brand{min-width:auto} }
+
     .panel{
       background: var(--card);
       border:1px solid var(--stroke);
@@ -108,57 +101,38 @@
       box-shadow: var(--shadow);
       overflow:hidden;
     }
-    .hero-left{
-      padding:26px 26px 22px;
-      position:relative;
-    }
+    .hero-left{padding:26px; position:relative;}
     .badge{
       display:inline-flex; align-items:center; gap:8px;
       padding:8px 12px;
       border-radius:999px;
       border:1px solid var(--stroke);
-      background:rgba(255,255,255,.75);
+      background:rgba(255,255,255,.78);
       color:var(--muted);
-      font-weight:800;
+      font-weight:900;
       font-size:12px;
     }
-    h1{
-      margin:14px 0 10px;
-      font-size:38px;
-      line-height:1.15;
-      letter-spacing:-.6px;
-    }
-    .sub{
-      margin:0 0 16px;
-      color:var(--muted);
-      font-size:15px;
-      line-height:1.7;
-    }
+    h1{margin:14px 0 10px; font-size:38px; line-height:1.15; letter-spacing:-.6px;}
+    .sub{margin:0 0 16px; color:var(--muted); font-size:15px; line-height:1.7;}
     .hero-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
     .spark{
-      position:absolute;
-      inset:auto -60px -60px auto;
+      position:absolute; inset:auto -60px -60px auto;
       width:260px; height:260px;
-      background: radial-gradient(circle at 30% 30%, rgba(34,183,255,.45), transparent 60%),
-                  radial-gradient(circle at 70% 70%, rgba(31,116,255,.35), transparent 55%);
-      filter: blur(2px);
+      background: radial-gradient(circle at 30% 30%, rgba(34,183,255,.42), transparent 60%),
+                  radial-gradient(circle at 70% 70%, rgba(31,116,255,.32), transparent 55%);
       border-radius: 60px;
       transform: rotate(18deg);
-      opacity:.85;
+      opacity:.9;
       pointer-events:none;
+      filter: blur(1px);
     }
 
-    .hero-right{
-      padding:22px;
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-    }
+    .hero-right{padding:22px; display:flex; flex-direction:column; gap:12px;}
     .logo-card{
       display:flex; align-items:center; gap:14px;
       padding:14px;
       border-radius: 16px;
-      background: rgba(255,255,255,.75);
+      background: rgba(255,255,255,.80);
       border:1px solid var(--stroke);
     }
     .logo-card img{
@@ -169,55 +143,45 @@
       background:#fff;
       padding:8px;
     }
-    .logo-card .t1{font-weight:900; letter-spacing:.2px}
-    .logo-card .t2{color:var(--muted); font-size:13px; margin-top:2px; line-height:1.5}
+    .logo-card .t1{font-weight:950; letter-spacing:.2px}
+    .logo-card .t2{color:var(--muted); font-size:13px; margin-top:3px; line-height:1.55}
 
     .quick{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:12px;
     }
+    @media (max-width: 940px){ .quick{grid-template-columns:1fr;} }
     .q{
       padding:14px;
       border-radius: 16px;
-      background: rgba(255,255,255,.75);
+      background: rgba(255,255,255,.80);
       border:1px solid var(--stroke);
     }
     .q b{display:block; font-size:14px; margin-bottom:6px}
-    .q span{display:block; color:var(--muted); font-size:12.5px; line-height:1.55}
+    .q span{display:block; color:var(--muted); font-size:12.8px; line-height:1.55}
 
-    section{margin-top:18px;}
+    section{margin-top:16px;}
     .grid{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
       gap:14px;
     }
-    @media (max-width: 920px){
-      .grid{grid-template-columns:1fr;}
-      .quick{grid-template-columns:1fr;}
-    }
+    @media (max-width: 940px){ .grid{grid-template-columns:1fr;} }
+
     .card{
       padding:18px;
       border-radius: var(--radius);
-      background: rgba(255,255,255,.78);
+      background: rgba(255,255,255,.82);
       border:1px solid var(--stroke);
       box-shadow: 0 10px 26px rgba(10,30,60,.08);
     }
-    .card h2{
-      margin:0 0 10px;
-      font-size:18px;
-      letter-spacing:-.2px;
-    }
-    .card p{
-      margin:0 0 14px;
-      color:var(--muted);
-      line-height:1.7;
-      font-size:14px;
-    }
+    .card h2{margin:0 0 10px; font-size:18px; letter-spacing:-.2px;}
+    .card p{margin:0 0 12px; color:var(--muted); line-height:1.7; font-size:14px;}
     .pillrow{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;}
     .pill{
       font-size:12px;
-      font-weight:800;
+      font-weight:900;
       color:#2a4b63;
       background: linear-gradient(180deg, #ffffff, #f3fbff);
       border:1px solid var(--stroke);
@@ -225,35 +189,100 @@
       border-radius:999px;
     }
 
+    /* Table */
+    .table-wrap{overflow:auto; border-radius:16px; border:1px solid var(--stroke); background:#fff;}
+    table{width:100%; border-collapse:collapse; min-width:720px;}
+    thead th{
+      text-align:left;
+      font-size:13px;
+      color:#1b3a55;
+      background: linear-gradient(180deg, #f6fbff, #eef7ff);
+      padding:12px 12px;
+      border-bottom:1px solid var(--stroke);
+      white-space:nowrap;
+    }
+    tbody td{
+      padding:12px 12px;
+      border-bottom:1px solid #eef3f9;
+      vertical-align:top;
+      color:#143047;
+      font-size:13.5px;
+      line-height:1.55;
+    }
+    tbody tr:last-child td{border-bottom:none;}
+    .muted{color:var(--muted);}
+    .mini{font-size:12.5px; color:var(--muted); line-height:1.6;}
+    .section-title{display:flex; align-items:flex-end; justify-content:space-between; gap:10px; margin-bottom:10px;}
+    .section-title h2{margin:0; font-size:18px;}
+    .section-title .mini a{font-weight:900; color:var(--brand);}
+
+    /* Footer */
     footer{
-      margin-top:28px;
+      margin-top:18px;
       padding:18px 16px;
       border-radius: 18px;
-      background: rgba(255,255,255,.72);
+      background: rgba(255,255,255,.80);
       border:1px solid var(--stroke);
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; flex-wrap:wrap;
+      display:flex; align-items:flex-start; justify-content:space-between;
+      gap:14px; flex-wrap:wrap;
     }
-    footer .note{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.6;
-    }
+    footer .left{display:flex; gap:10px; align-items:flex-start;}
     footer img{
       width:34px; height:34px; object-fit:contain;
       border-radius: 12px;
       border:1px solid var(--stroke);
       background:#fff;
       padding:5px;
+      margin-top:2px;
+    }
+    footer .note{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.65;
+    }
+    .footer-box{
+      margin-top:10px;
+      padding:12px 14px;
+      border-radius:14px;
+      background: rgba(245,251,255,.95);
+      border:1px dashed #cbe2f7;
+      color:#2a4b63;
+      font-size:13px;
+      line-height:1.65;
     }
   </style>
+
+  <script>
+    // ✅ 로고 깨짐 방지: 로고 로딩 실패 시 "대체 SVG 로고"로 자동 변경
+    const FALLBACK_LOGO =
+      "data:image/svg+xml;charset=UTF-8," +
+      encodeURIComponent(`
+      <svg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 128 128'>
+        <defs>
+          <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+            <stop offset='0' stop-color='#1f74ff'/>
+            <stop offset='1' stop-color='#22b7ff'/>
+          </linearGradient>
+        </defs>
+        <rect x='8' y='8' width='112' height='112' rx='22' fill='white' stroke='#d6e7f7'/>
+        <circle cx='64' cy='58' r='20' fill='url(#g)' opacity='0.18'/>
+        <path d='M64 22l6 18h19l-15 11 6 18-16-11-16 11 6-18-15-11h19z' fill='url(#g)'/>
+        <text x='64' y='98' text-anchor='middle' font-family='Arial' font-size='12' font-weight='700' fill='#0b1b2b'>POLARIS</text>
+      </svg>`);
+    function fixLogo(img){
+      img.onerror = () => { img.src = FALLBACK_LOGO; img.onerror = null; };
+    }
+    window.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll("img[data-logo='1']").forEach(fixLogo);
+    });
+  </script>
 </head>
 
 <body>
   <div class="wrap">
     <header class="topbar">
       <a class="brand" href="./index.html" aria-label="Polaris Science Academy 홈">
-        <img src="assets/polaris-logo.png" alt="Polaris Science 로고">
+        <img data-logo="1" src="assets/polaris-logo.png" alt="Polaris Science 로고">
         <div class="txt">
           <b>POLARIS SCIENCE</b>
           <span>ACADEMY</span>
@@ -261,14 +290,15 @@
       </a>
 
       <nav class="nav" aria-label="메뉴">
-        <a class="btn ghost" href="./index.html#services">교육서비스</a>
-        <a class="btn ghost" href="./index.html#programs">프로그램</a>
+        <a class="btn ghost" href="#services">교육서비스</a>
+        <a class="btn ghost" href="#programs">프로그램</a>
         <a class="btn" href="./pay.html">결제 안내</a>
         <a class="btn primary" href="https://blog.naver.com/yio02" target="_blank" rel="noopener">네이버 블로그</a>
       </nav>
     </header>
 
     <main>
+      <!-- HERO -->
       <div class="hero">
         <div class="panel hero-left">
           <div class="badge">✨ Bright &amp; Active Learning · Polaris Science</div>
@@ -279,7 +309,7 @@
           </p>
 
           <div class="hero-actions">
-            <a class="btn primary" href="./index.html#services">교육서비스 보기</a>
+            <a class="btn primary" href="#services">교육서비스 보기</a>
             <a class="btn" href="./pay.html">수강/결제 안내</a>
             <a class="btn ghost" href="https://blog.naver.com/yio02" target="_blank" rel="noopener">블로그에서 소식 보기</a>
           </div>
@@ -288,10 +318,12 @@
 
         <aside class="panel hero-right">
           <div class="logo-card">
-            <img src="assets/polaris-logo.png" alt="Polaris Science 로고">
+            <img data-logo="1" src="assets/polaris-logo.png" alt="Polaris Science 로고">
             <div>
               <div class="t1">POLARIS SCIENCE ACADEMY</div>
-              <div class="t2">밝고 신뢰감 있는 디자인으로, 학원 홈페이지 느낌을 살린 레이아웃입니다.</div>
+              <div class="t2">
+                <b>학원 소개 / 공지 / 커리큘럼 업데이트</b>는 네이버 블로그에서 가장 빠르게 확인하실 수 있습니다.
+              </div>
             </div>
           </div>
 
@@ -310,42 +342,43 @@
             </div>
             <div class="q">
               <b>최적 학습</b>
-              <span>개별 강약점 분석으로 ‘가능한’ 공부량을 설계</span>
+              <span>개별 강약점 분석으로 가능한 공부량을 설계</span>
             </div>
           </div>
         </aside>
       </div>
 
+      <!-- 3 CARDS -->
       <section id="services">
         <div class="grid">
           <div class="card">
             <h2>교육서비스</h2>
             <p>
-              폴라리스 사이언스의 프로그램/수업 소식과 실제 운영 안내는
-              네이버 블로그를 통해 가장 빠르게 확인하실 수 있습니다.
+              폴라리스 사이언스의 자세한 소식은 네이버블로그를 통해 접하실 수 있습니다.<br/>
+              운영 안내/공지/커리큘럼 업데이트는 블로그에서 확인해주세요.
             </p>
-            <!-- ✅ 요청하신 블로그 버튼: 교육서비스 항목 내 -->
-            <a class="btn primary" href="https://blog.naver.com/yio02" target="_blank" rel="noopener">
-              네이버 블로그 바로가기
-            </a>
-
+            <a class="btn primary" href="https://blog.naver.com/yio02" target="_blank" rel="noopener">네이버 블로그 바로가기</a>
             <div class="pillrow">
               <span class="pill">중등/고등 심화</span>
               <span class="pill">영재원·과학고 대비</span>
-              <span class="pill">탐구·대회 컨설팅</span>
+              <span class="pill">탐구·대회 멘토링</span>
             </div>
           </div>
 
-          <div class="card" id="programs">
-            <h2>프로그램</h2>
+          <div class="card" id="about">
+            <h2>학원소개</h2>
             <p>
-              단계별 개념 구축 → 응용·서술형 → 실전 문제해결로 이어지는 구성.<br/>
-              수업은 학생별 목표에 맞춰 유연하게 조정됩니다.
+              <b>임서혁 원장</b>의 교육 철학과 지도 경험, 그리고 운영 방향은
+              네이버 블로그에서 확인하실 수 있습니다.
             </p>
+            <div class="mini">
+              · 원장 소개(블로그): <a href="https://blog.naver.com/yio02" target="_blank" rel="noopener">https://blog.naver.com/yio02</a><br/>
+              · 상담/등록 관련 공지 및 안내도 블로그에 정리됩니다.
+            </div>
             <div class="pillrow">
-              <span class="pill">기본/심화</span>
-              <span class="pill">유형/모의</span>
-              <span class="pill">파이널</span>
+              <span class="pill">맞춤 설계</span>
+              <span class="pill">성과 중심</span>
+              <span class="pill">지속 관리</span>
             </div>
           </div>
 
@@ -353,24 +386,114 @@
             <h2>결제/환불 안내</h2>
             <p>
               수강료 결제, 계좌이체 및 카드 결제 안내는 결제 페이지에서 확인 가능합니다.
-              (필요 시 토스/카카오페이/PG 구조에 맞춰 문구를 더 구체화해드릴게요.)
             </p>
             <a class="btn" href="./pay.html">결제 안내 페이지</a>
             <div class="pillrow">
               <span class="pill">카드 결제</span>
               <span class="pill">계좌이체</span>
-              <span class="pill">영수증/증빙</span>
+              <span class="pill">증빙/영수증</span>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- PROGRAM TABLE -->
+      <section id="programs" class="panel" style="margin-top:16px; padding:18px;">
+        <div class="section-title">
+          <h2>학원 프로그램(반) 안내</h2>
+          <div class="mini">
+            자세한 커리큘럼/공지: <a href="https://blog.naver.com/yio02" target="_blank" rel="noopener">네이버 블로그</a>
+          </div>
+        </div>
+
+        <div class="mini" style="margin-bottom:10px;">
+          ※ 아래 표는 홈페이지용 기본 템플릿입니다. 실제 운영 반(명칭/시간/회차/정원)에 맞춰 값만 바꾸면 됩니다.
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>프로그램(반)</th>
+                <th>대상</th>
+                <th>수업시간(1회)</th>
+                <th>주당 횟수</th>
+                <th>수업 목표</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>중등 과학 개념/실험 기초반</b></td>
+                <td>초6~중2</td>
+                <td>4시간 (이론+실험)</td>
+                <td>주 1회</td>
+                <td class="muted">
+                  중등 핵심 개념 정리 + 실험 기반 이해<br/>
+                  서술형/탐구형 문항 기초 체력 구축
+                </td>
+              </tr>
+              <tr>
+                <td><b>중등 심화 / 고등 선행반</b></td>
+                <td>중1~중3</td>
+                <td>3시간</td>
+                <td>주 1회</td>
+                <td class="muted">
+                  심화 개념 확장 + 고등 개념 연결<br/>
+                  유형/서술형 사고력 강화
+                </td>
+              </tr>
+              <tr>
+                <td><b>영재입시 실전반</b></td>
+                <td>중2~중3</td>
+                <td>3시간</td>
+                <td>주 2회</td>
+                <td class="muted">
+                  영역별 고난도 문제해결(추론/서술/융합)<br/>
+                  실전형 풀이 전략 &amp; 약점 보완
+                </td>
+              </tr>
+              <tr>
+                <td><b>탐구/대회 멘토링(프로젝트)</b></td>
+                <td>초·중·고</td>
+                <td>상담 후 조정</td>
+                <td>맞춤</td>
+                <td class="muted">
+                  주제 선정 → 실험 설계 → 데이터/보고서 → 발표<br/>
+                  대회/전람회/발명대회 맞춤 피드백
+                </td>
+              </tr>
+              <tr>
+                <td><b>파이널/모의고사 클리닉</b></td>
+                <td>해당 시즌</td>
+                <td>상담 후 조정</td>
+                <td>맞춤</td>
+                <td class="muted">
+                  기출 기반 실전 모의 + 시간 관리<br/>
+                  실전 점수화/면접 대비 연계
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- FOOTER (사업자 정보 필수) -->
       <footer>
-        <div style="display:flex; align-items:center; gap:10px;">
-          <img src="assets/polaris-logo.png" alt="Polaris Science 로고">
+        <div class="left">
+          <img data-logo="1" src="assets/polaris-logo.png" alt="Polaris Science 로고">
           <div class="note">
             <b>폴라리스 사이언스의 자세한 소식은 네이버블로그를 통해 접하실 수 있습니다.</b><br/>
             운영 안내/공지/커리큘럼 업데이트는 블로그에서 확인해주세요.
+            <div class="footer-box">
+              <b>[사업자 정보]</b> (토스페이먼츠 심사 필수 표기)<br/>
+              상호명: 폴라리스 사이언스(Polaris Science Academy)<br/>
+              대표자: 임서혁<br/>
+              사업자등록번호: <b>여기에 입력</b> (예: 000-00-00000)<br/>
+              주소: <b>여기에 입력</b> (예: 서울특별시 ○○구 ○○로 ○○, ○층)<br/>
+              고객센터(연락처): <b>여기에 입력</b> (예: 010-0000-0000)<br/>
+              이메일: <b>여기에 입력</b> (예: polaris_science@email.com)<br/>
+              (해당 시) 통신판매업 신고번호 / 학원(교습소) 등록번호: <b>여기에 입력</b>
+            </div>
           </div>
         </div>
         <a class="btn primary" href="https://blog.naver.com/yio02" target="_blank" rel="noopener">네이버 블로그</a>
