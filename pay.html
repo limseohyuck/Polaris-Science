@@ -2,342 +2,205 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Polaris Science | 수강료 결제</title>
-  <meta name="description" content="폴라리스 사이언스 학부모 수강료 결제 페이지" />
-
-  <!-- TossPayments Standard v2 -->
-  <script src="https://js.tosspayments.com/v2/standard"></script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>결제 안내 | Polaris Science Academy</title>
+  <meta name="description" content="폴라리스 사이언스 아카데미 결제 안내" />
   <style>
     :root{
-      --bg:#0b1220; --line:rgba(255,255,255,.14);
-      --text:rgba(255,255,255,.92); --muted:rgba(255,255,255,.70); --muted2:rgba(255,255,255,.55);
-      --a:#7dd3fc; --b:#a78bfa; --shadow:0 14px 50px rgba(0,0,0,.35);
-      --r:18px;
+      --bg1:#f7fbff; --bg2:#eaf6ff;
+      --ink:#0b1b2b; --muted:#4b647a;
+      --card:#ffffffcc; --stroke:#d6e7f7;
+      --brand:#1f74ff; --brand2:#22b7ff;
+      --shadow: 0 12px 35px rgba(10, 30, 60, .10);
+      --radius: 18px;
     }
     *{box-sizing:border-box}
     body{
-      margin:0; color:var(--text);
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Apple SD Gothic Neo","Noto Sans KR", Arial, "맑은 고딕", sans-serif;
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;
+      color:var(--ink);
       background:
-        radial-gradient(1100px 700px at 20% 10%, rgba(167,139,250,.26), transparent 60%),
-        radial-gradient(900px 600px at 80% 15%, rgba(125,211,252,.22), transparent 55%),
-        var(--bg);
+        radial-gradient(1200px 600px at 15% 15%, #ffffff 0%, transparent 55%),
+        radial-gradient(900px 500px at 85% 20%, #dff2ff 0%, transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
       min-height:100vh;
     }
-    .wrap{max-width:1100px; margin:0 auto; padding:26px 18px 46px;}
-    .top{display:flex; justify-content:space-between; align-items:center; gap:14px; margin-bottom:16px;}
-    .brand{display:flex; gap:12px; align-items:center;}
-    .logo{width:40px;height:40px;border-radius:14px;background:linear-gradient(135deg,var(--a),var(--b));box-shadow:var(--shadow);position:relative;overflow:hidden}
-    .logo:after{content:"";position:absolute;inset:-45%;background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 60%);transform:rotate(18deg)}
-    .brand h1{margin:0;font-size:18px}
-    .brand p{margin:2px 0 0;color:var(--muted2);font-size:12.5px}
-    .pill{padding:10px 12px;border:1px solid var(--line);background:rgba(255,255,255,.06);border-radius:999px;color:var(--muted);font-size:12.5px;backdrop-filter:blur(10px);white-space:nowrap}
-    @media (max-width:920px){.pill{display:none}}
-    .grid{display:grid;grid-template-columns:1.25fr .75fr;gap:16px}
-    @media (max-width:920px){.grid{grid-template-columns:1fr}}
-    .hero,.card,.sum{border:1px solid var(--line);background:rgba(255,255,255,.06);border-radius:var(--r);box-shadow:var(--shadow);backdrop-filter:blur(12px)}
-    .hero{padding:18px;position:relative;overflow:hidden}
-    .hero:before{content:"";position:absolute;inset:-2px;background:
-      radial-gradient(600px 260px at 10% 0%, rgba(125,211,252,.25), transparent 60%),
-      radial-gradient(520px 220px at 90% 5%, rgba(167,139,250,.22), transparent 55%);pointer-events:none}
-    .hero .inner{position:relative}
-    .hero h2{margin:0 0 6px;font-size:22px}
-    .hero .sub{margin:0;color:var(--muted);font-size:13.5px;line-height:1.55}
-    .badge{display:inline-block;margin-top:10px;margin-right:8px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.06);font-size:12px;color:rgba(255,255,255,.82)}
-    .card{padding:16px;margin-top:16px}
-    .card h3{margin:0 0 10px;font-size:15px}
-    .hint{margin:0 0 10px;color:var(--muted2);font-size:12.5px;line-height:1.55}
-    .opts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-    @media (max-width:560px){.opts{grid-template-columns:1fr}}
-    .opt{cursor:pointer;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);border-radius:14px;padding:12px;transition:.15s}
-    .opt:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.24)}
-    .opt.active{border-color:rgba(125,211,252,.55);box-shadow:0 0 0 4px rgba(125,211,252,.10);background:rgba(125,211,252,.06)}
-    .t1{font-weight:800;font-size:13.5px}
-    .t2{margin-top:4px;color:var(--muted2);font-size:12px;line-height:1.45}
-    label{display:block;margin:10px 0 6px;color:var(--muted);font-size:12.5px}
-    input{
-      width:100%;border-radius:12px;border:1px solid rgba(255,255,255,.16);
-      background:rgba(0,0,0,.18);color:var(--text);padding:11px 12px;outline:none;transition:.15s
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:980px; margin:0 auto; padding:28px 18px 56px;}
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px; padding:12px 14px;
+      background:rgba(255,255,255,.75);
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      box-shadow: 0 8px 24px rgba(10,30,60,.07);
+      backdrop-filter: blur(8px);
+      position:sticky; top:12px; z-index:10;
     }
-    input:focus{border-color:rgba(125,211,252,.55);box-shadow:0 0 0 4px rgba(125,211,252,.10)}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    @media (max-width:560px){.row{grid-template-columns:1fr}}
-    .sum{padding:14px;position:sticky;top:14px}
-    @media (max-width:920px){.sum{position:relative;top:auto}}
-    .kv{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.12)}
-    .kv:last-child{border-bottom:0}
-    .k{color:var(--muted2);font-size:12.5px}
-    .v{font-weight:800;font-size:13.5px;text-align:right}
-    .price{font-size:22px}
+    .brand{display:flex; align-items:center; gap:10px;}
+    .brand img{
+      width:40px; height:40px; border-radius:12px;
+      object-fit:contain; background:#fff; border:1px solid var(--stroke); padding:6px;
+    }
+    .brand b{font-size:14px; letter-spacing:.2px}
+    .nav{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;}
     .btn{
-      width:100%;border:0;border-radius:14px;padding:13px 14px;font-weight:900;font-size:14px;cursor:pointer;
-      background:linear-gradient(135deg,var(--a),var(--b));color:rgba(10,18,32,.95);box-shadow:0 10px 30px rgba(0,0,0,.35);transition:.15s
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 14px; border-radius:999px;
+      border:1px solid var(--stroke); background:#fff;
+      font-weight:800; cursor:pointer;
+      box-shadow: 0 10px 22px rgba(10,30,60,.06);
+      transition: transform .15s ease, box-shadow .15s ease;
+      white-space:nowrap;
     }
-    .btn:hover{transform:translateY(-1px)}
-    .btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
-    .small{margin-top:10px;width:100%;border-radius:14px;padding:12px 14px;font-weight:800;font-size:13px;cursor:pointer;
-      background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:var(--text)
+    .btn:hover{transform:translateY(-1px); box-shadow: 0 16px 30px rgba(10,30,60,.10);}
+    .btn.primary{
+      border:none; color:#fff;
+      background: linear-gradient(135deg, var(--brand), var(--brand2));
+      box-shadow: 0 14px 30px rgba(31,116,255,.22);
     }
-    .notice{margin-top:10px;color:var(--muted2);font-size:12px;line-height:1.6}
-    .toast{margin-top:10px;padding:11px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.22);color:var(--muted);font-size:12.5px;display:none;line-height:1.5}
-    .toast.show{display:block}
-    .toast.bad{border-color:rgba(251,113,133,.35)}
-    .foot{margin-top:12px;color:var(--muted2);font-size:12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
-    a{color:var(--a);text-decoration:none}
-    a:hover{text-decoration:underline}
+    .btn.primary:hover{box-shadow: 0 18px 36px rgba(31,116,255,.28);}
+
+    .panel{
+      margin-top:18px;
+      background: var(--card);
+      border:1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .head{
+      padding:22px 22px 12px;
+    }
+    h1{margin:0 0 8px; font-size:28px; letter-spacing:-.4px;}
+    .sub{margin:0; color:var(--muted); line-height:1.7; font-size:14.5px;}
+    .grid{
+      display:grid; grid-template-columns:1fr 1fr; gap:14px;
+      padding:14px 22px 22px;
+    }
+    @media (max-width: 860px){ .grid{grid-template-columns:1fr;} }
+    .card{
+      background:rgba(255,255,255,.78);
+      border:1px solid var(--stroke);
+      border-radius: 16px;
+      padding:16px;
+    }
+    .card h2{margin:0 0 8px; font-size:16px;}
+    .card p{margin:0; color:var(--muted); line-height:1.7; font-size:14px;}
+    .list{margin:10px 0 0; padding-left:18px; color:var(--muted); line-height:1.7; font-size:14px;}
+    footer{
+      margin-top:18px;
+      padding:18px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.72);
+      border:1px solid var(--stroke);
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
+    }
+    footer .note{color:var(--muted); font-size:13px; line-height:1.6;}
+    footer img{
+      width:34px; height:34px; object-fit:contain;
+      border-radius: 12px; border:1px solid var(--stroke); background:#fff; padding:5px;
+    }
+    .mutebox{
+      margin-top:14px;
+      padding:14px 16px;
+      background: rgba(255,255,255,.66);
+      border:1px dashed #cbe2f7;
+      border-radius: 16px;
+      color:var(--muted);
+      line-height:1.7;
+      font-size:13.5px;
+    }
+    .inline-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
   </style>
 </head>
 
 <body>
-<div class="wrap">
-  <div class="top">
-    <div class="brand">
-      <div class="logo" aria-hidden="true"></div>
-      <div>
-        <h1>Polaris Science</h1>
-        <p>학부모 수강료 결제 · 오프라인 과학 수업</p>
+  <div class="wrap">
+    <header class="topbar">
+      <a class="brand" href="./index.html" aria-label="Polaris Science Academy 홈">
+        <img src="assets/polaris-logo.png" alt="Polaris Science 로고">
+        <b>POLARIS SCIENCE</b>
+      </a>
+      <nav class="nav" aria-label="메뉴">
+        <a class="btn" href="./index.html#services">교육서비스</a>
+        <a class="btn" href="./index.html">홈</a>
+        <a class="btn primary" href="https://blog.naver.com/yio02" target="_blank" rel="noopener">네이버 블로그</a>
+      </nav>
+    </header>
+
+    <main class="panel">
+      <div class="head">
+        <h1>결제 안내</h1>
+        <p class="sub">
+          아래 내용은 기본 템플릿입니다. 실제 운영 중인 결제 방식(계좌/카드/링크결제 등)에 맞춰 문구를 더 정확히 다듬어드릴 수 있어요.
+        </p>
+        <div class="inline-actions">
+          <a class="btn primary" href="https://blog.naver.com/yio02" target="_blank" rel="noopener">블로그에서 공지 확인</a>
+          <a class="btn" href="./index.html">홈으로</a>
+        </div>
       </div>
-    </div>
-    <div class="pill">✔ 카드결제(토스페이먼츠) · 문의 010-8384-6322</div>
+
+      <div class="grid">
+        <div class="card">
+          <h2>1) 계좌이체</h2>
+          <p>수강 등록 후 안내받은 계좌로 입금해 주세요.</p>
+          <ul class="list">
+            <li>입금자명: 학생명 또는 학부모명 + 학생명 권장</li>
+            <li>입금 확인 후 수강 확정 안내를 드립니다</li>
+            <li>현금영수증/증빙이 필요하면 미리 말씀해 주세요</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>2) 카드 결제 / 링크 결제</h2>
+          <p>카드 결제(온라인 링크 포함)가 가능한 경우, 결제 링크를 별도로 안내드립니다.</p>
+          <ul class="list">
+            <li>결제 링크는 안내된 기간 내에만 유효할 수 있습니다</li>
+            <li>결제 완료 시 성공 페이지로 이동합니다</li>
+            <li>오류 발생 시 ‘실패 페이지’ 안내에 따라 진행해 주세요</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>3) 결제 성공/실패 테스트 링크</h2>
+          <p>PG/결제 모듈을 붙일 때 아래 페이지로 리다이렉트(redirect)되도록 연결합니다.</p>
+          <div class="inline-actions" style="margin-top:10px;">
+            <a class="btn" href="./success.html">성공 페이지</a>
+            <a class="btn" href="./fail.html">실패 페이지</a>
+          </div>
+          <div class="mutebox">
+            ※ 실제 결제 연동 시: 결제 완료 콜백 URL을 <b>success.html</b>, 실패 콜백 URL을 <b>fail.html</b>로 설정해 사용하면 편합니다.
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>4) 환불/변경 안내</h2>
+          <p>운영 정책(회차 기준/월 기준/특강 기준)에 따라 문구가 달라집니다.</p>
+          <ul class="list">
+            <li>수업 시작 전/후 환불 기준</li>
+            <li>교재/재료비 포함 여부</li>
+            <li>보강 및 일정 변경 기준</li>
+          </ul>
+          <div class="mutebox">
+            원하시면, 서혁님이 이전에 정리하셨던 “학부모 신뢰형 문구(환불 규정 포함)” 톤으로
+            <b>정식 약관형 문장</b>으로 깔끔하게 맞춰드릴게요.
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <img src="assets/polaris-logo.png" alt="Polaris Science 로고">
+        <div class="note">
+          <b>폴라리스 사이언스의 자세한 소식은 네이버블로그를 통해 접하실 수 있습니다.</b><br/>
+          결제/공지/수업 일정 안내는 블로그에서 확인해주세요.
+        </div>
+      </div>
+      <a class="btn primary" href="https://blog.naver.com/yio02" target="_blank" rel="noopener">네이버 블로그</a>
+    </footer>
   </div>
-
-  <div class="grid">
-    <div>
-      <section class="hero">
-        <div class="inner">
-          <h2>수강료 결제</h2>
-          <p class="sub">
-            아래에서 수업을 선택하고 결제를 진행해 주세요. 결제 후 <b>학생명 / 수업명 / 결제월</b>을 문자(또는 카톡)로 보내주시면 등록이 완료됩니다.
-          </p>
-          <span class="badge">✅ 결제 단위: 1개월(월 4회)</span>
-          <span class="badge">✅ 오프라인(대면) 수업</span>
-          <span class="badge">✅ 카드결제(토스)</span>
-        </div>
-      </section>
-
-      <section class="card">
-        <h3>1) 결제 항목 선택</h3>
-        <p class="hint">월 4회 기준 수강료입니다.</p>
-        <div class="opts" id="opts"></div>
-
-        <div class="row" style="margin-top:12px">
-          <div>
-            <label for="payMonth">결제월(예: 2026-03)</label>
-            <input id="payMonth" placeholder="예: 2026-03" />
-          </div>
-          <div>
-            <label for="memo">메모(선택)</label>
-            <input id="memo" placeholder="예: 교재비 포함 / 특이사항" />
-          </div>
-        </div>
-      </section>
-
-      <section class="card">
-        <h3>2) 결제자 정보</h3>
-        <div class="row">
-          <div>
-            <label for="parentName">학부모 성함</label>
-            <input id="parentName" placeholder="예: 홍길동" />
-          </div>
-          <div>
-            <label for="phone">연락처</label>
-            <input id="phone" inputmode="tel" placeholder="예: 010-1234-5678" />
-          </div>
-        </div>
-        <div class="row">
-          <div>
-            <label for="studentName">학생명</label>
-            <input id="studentName" placeholder="예: 김OO" />
-          </div>
-          <div>
-            <label for="className">수업명(확인)</label>
-            <input id="className" placeholder="선택한 항목이 자동 입력됩니다" disabled />
-          </div>
-        </div>
-
-        <label style="margin-top:10px">
-          <input type="checkbox" id="agree" />
-          <span style="color:rgba(255,255,255,.82);font-size:12.5px">
-            환불 규정 및 오프라인 수업 안내를 확인했고 동의합니다.
-          </span>
-        </label>
-
-        <div class="toast" id="toast"></div>
-
-        <div class="notice">
-          <b>환불 규정(요약)</b><br/>
-          • 수강 시작 전: 전액 환불<br/>
-          • 수강 시작 후: 진행된 수업을 제외한 금액 환불<br/>
-          <span style="color:rgba(255,255,255,.65)">자세한 내용은 학원 안내 및 관련 법령/지침을 따릅니다.</span>
-        </div>
-      </section>
-    </div>
-
-    <aside>
-      <section class="sum">
-        <div class="kv"><div class="k">선택 항목</div><div class="v" id="sumItem">-</div></div>
-        <div class="kv"><div class="k">주문번호</div><div class="v" id="sumOrderId">-</div></div>
-        <div class="kv"><div class="k">결제 금액</div><div class="v price" id="sumPrice">₩ 0</div></div>
-
-        <button class="btn" id="payBtn" type="button">토스 결제 진행</button>
-        <button class="small" id="copyBtn" type="button">결제정보 복사(학부모/내부기록)</button>
-
-        <div class="notice">
-          <b>문의</b><br/>
-          • 전화: 010-8384-6322<br/>
-          • 이메일: yio02@naver.com<br/><br/>
-          <b>사업자 정보</b><br/>
-          • 대표자: 임서혁<br/>
-          • 사업자등록번호: 602-41-43962<br/>
-          • 주소: 서울특별시 송파구 백제고분로 170 6층 B-01호
-        </div>
-
-        <div class="foot">
-          <div>© <span id="year"></span> Polaris Science</div>
-          <div><a href="./">홈으로</a></div>
-        </div>
-      </section>
-    </aside>
-  </div>
-</div>
-
-<script>
-  // ✅ 서혁님 토스 API 개발 연동 키(테스트 Client Key)
-  const TOSS_CLIENT_KEY = "test_ck_ZLKGPx4M3MqNM5RP5nAd3BaWypv1";
-
-  const items = [
-    { id:"c1", name:"중등과학 개념반", amount:240000, desc:"4시간 · 월 4회" },
-    { id:"c2", name:"중등과학 심화 / 고등선행", amount:220000, desc:"3시간 · 월 4회" },
-    { id:"c3", name:"영재입시 중등심화 유형풀이반", amount:220000, desc:"3시간 · 월 4회" },
-    { id:"c4", name:"영재입시 고등선행 기본반", amount:220000, desc:"3시간 · 월 4회" },
-    { id:"c5", name:"영재입시 중등심화+고등선행 주2회반", amount:400000, desc:"3시간 + 3시간 · 주2회" },
-  ];
-
-  const el = (id)=>document.getElementById(id);
-  const opts = el("opts");
-  const toast = el("toast");
-  const className = el("className");
-
-  let selected = items[0];
-  let orderId = makeOrderId();
-
-  function makeOrderId(){
-    const t = Date.now().toString(36);
-    const r = Math.random().toString(36).slice(2,8);
-    return `polaris-${t}-${r}`;
-  }
-  function won(n){ return "₩ " + Number(n).toLocaleString("ko-KR"); }
-  function show(msg, bad=false){
-    toast.textContent = msg;
-    toast.className = "toast show" + (bad ? " bad" : "");
-  }
-  function clear(){ toast.className="toast"; toast.textContent=""; }
-  function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-
-  let payment = null;
-  try{
-    const tossPayments = TossPayments(TOSS_CLIENT_KEY);
-    payment = tossPayments.payment({ customerKey: TossPayments.ANONYMOUS });
-  }catch(e){
-    console.error(e);
-    show("토스 결제 초기화 실패: Client Key 확인이 필요합니다.", true);
-  }
-
-  function render(){
-    opts.innerHTML="";
-    items.forEach(it=>{
-      const d=document.createElement("div");
-      d.className="opt"+(it.id===selected.id?" active":"");
-      d.innerHTML = `<div class="t1">${esc(it.name)}</div>
-                     <div class="t2">${esc(it.desc)} · <b>${won(it.amount)}</b></div>`;
-      d.onclick=()=>{ selected=it; className.value=it.name; update(); render(); };
-      opts.appendChild(d);
-    });
-    className.value = selected.name;
-  }
-
-  function update(){
-    el("sumItem").textContent = selected.name;
-    el("sumOrderId").textContent = orderId;
-    el("sumPrice").textContent = won(selected.amount);
-    clear();
-  }
-
-  async function pay(){
-    if (!payment) return show("결제 모듈이 준비되지 않았습니다. (키/네트워크 확인)", true);
-
-    const parentName = el("parentName").value.trim();
-    const phone = el("phone").value.trim();
-    const student = el("studentName").value.trim();
-    const month = el("payMonth").value.trim();
-    const memo = el("memo").value.trim();
-    const agreed = el("agree").checked;
-
-    if(!agreed) return show("동의 체크가 필요합니다.", true);
-    if(!parentName) return show("학부모 성함을 입력해 주세요.", true);
-    if(!phone) return show("연락처를 입력해 주세요.", true);
-    if(!student) return show("학생명을 입력해 주세요.", true);
-    if(!month) return show("결제월을 입력해 주세요. (예: 2026-03)", true);
-
-    const meta = new URLSearchParams({
-      parentName, phone, studentName: student, className: selected.name, payMonth: month, memo
-    }).toString();
-
-    const base = window.location.origin; // ✅ 배포 도메인 자동 사용
-    const successUrl = `${base}/success.html?${meta}`;
-    const failUrl    = `${base}/fail.html?${meta}`;
-
-    try{
-      el("payBtn").disabled = true;
-      show("결제창을 여는 중입니다… (팝업 차단이 있으면 허용)", false);
-
-      await payment.requestPayment({
-        method: "CARD",
-        amount: { currency:"KRW", value: Number(selected.amount) },
-        orderId,
-        orderName: `${selected.name} (${month})`,
-        successUrl,
-        failUrl,
-        customerName: parentName
-      });
-
-    }catch(e){
-      console.error(e);
-      const code = e?.code ? ` (${e.code})` : "";
-      const msg = e?.message ? `\n${e.message}` : "";
-      show(`결제가 취소되었거나 오류가 발생했습니다.${code}${msg}`, true);
-      el("payBtn").disabled = false;
-
-      orderId = makeOrderId();
-      update();
-    }
-  }
-
-  el("payBtn").addEventListener("click", pay);
-
-  el("copyBtn").addEventListener("click", async ()=>{
-    const text = [
-      `Polaris Science 결제정보`,
-      `- 항목: ${selected.name}`,
-      `- 금액: ${won(selected.amount)}`,
-      `- 주문번호: ${orderId}`,
-      `- 학부모: ${el("parentName").value.trim() || "-"}`,
-      `- 연락처: ${el("phone").value.trim() || "-"}`,
-      `- 학생명: ${el("studentName").value.trim() || "-"}`,
-      `- 결제월: ${el("payMonth").value.trim() || "-"}`,
-    ].join("\n");
-    try{
-      await navigator.clipboard.writeText(text);
-      show("복사 완료! (학부모 안내/내부 기록용)", false);
-    }catch{
-      show("복사 실패: 브라우저 권한을 확인해 주세요.", true);
-    }
-  });
-
-  el("year").textContent = new Date().getFullYear();
-  render(); update();
-</script>
 </body>
 </html>
