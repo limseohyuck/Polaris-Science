@@ -9,9 +9,9 @@
     :root{
       --bg1:#f7fbff; --bg2:#eaf6ff;
       --ink:#0b1b2b; --muted:#4b647a;
-      --card:#ffffffcc; --stroke:#d6e7f7;
+      --card:#ffffffde; --stroke:#d6e7f7;
       --brand:#1f74ff; --brand2:#22b7ff;
-      --shadow: 0 12px 35px rgba(10, 30, 60, .10);
+      --shadow: 0 12px 34px rgba(10, 30, 60, .10);
       --radius: 18px;
       --ok:#0aa66b;
     }
@@ -21,13 +21,11 @@
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif;
       color:var(--ink);
       background:
-        radial-gradient(1200px 600px at 15% 15%, #ffffff 0%, transparent 55%),
-        radial-gradient(900px 500px at 85% 20%, #dff2ff 0%, transparent 55%),
+        radial-gradient(1100px 560px at 15% 15%, #ffffff 0%, transparent 58%),
+        radial-gradient(900px 520px at 85% 18%, #dff2ff 0%, transparent 58%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
       min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      display:flex; align-items:center; justify-content:center;
       padding:24px;
     }
     a{color:inherit; text-decoration:none}
@@ -39,59 +37,43 @@
       box-shadow: var(--shadow);
       overflow:hidden;
     }
-    .top{
-      padding:20px 20px 12px;
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
+    .top{padding:20px 20px 12px; display:flex; align-items:center; gap:12px;}
     .top img{
-      width:46px; height:46px;
-      object-fit:contain;
-      border-radius:14px;
-      border:1px solid var(--stroke);
-      background:#fff;
-      padding:7px;
+      width:46px; height:46px; object-fit:contain;
+      border-radius:14px; border:1px solid var(--stroke);
+      background:#fff; padding:7px;
     }
     .badge{
       display:inline-flex; align-items:center; gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      background: rgba(255,255,255,.75);
+      padding:8px 12px; border-radius:999px;
+      background: rgba(255,255,255,.78);
       border:1px solid var(--stroke);
       color: var(--muted);
-      font-weight:900;
-      font-size:12px;
+      font-weight:950; font-size:12px;
     }
     .main{padding:0 20px 20px;}
     h1{margin:10px 0 8px; font-size:28px; letter-spacing:-.4px;}
     p{margin:0; color:var(--muted); line-height:1.75; font-size:14.5px;}
     .okmark{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      margin-top:14px;
-      padding:12px 14px;
+      display:inline-flex; align-items:center; gap:10px;
+      margin-top:14px; padding:12px 14px;
       border-radius:16px;
       background: rgba(10,166,107,.08);
       border:1px solid rgba(10,166,107,.25);
       color:#0b3a2a;
-      font-weight:800;
+      font-weight:900;
     }
-    .actions{
-      display:flex; gap:10px; flex-wrap:wrap;
-      margin-top:16px;
-    }
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
       padding:10px 14px; border-radius:999px;
       border:1px solid var(--stroke); background:#fff;
-      font-weight:900;
+      font-weight:950;
       box-shadow: 0 10px 22px rgba(10,30,60,.06);
       transition: transform .15s ease, box-shadow .15s ease;
       white-space:nowrap;
     }
-    .btn:hover{transform:translateY(-1px); box-shadow: 0 16px 30px rgba(10,30,60,.10);}
+    .btn:hover{transform:translateY(-1px); box-shadow: 0 16px 28px rgba(10,30,60,.10);}
     .btn.primary{
       border:none; color:#fff;
       background: linear-gradient(135deg, var(--brand), var(--brand2));
@@ -101,23 +83,40 @@
     .foot{
       padding:16px 20px;
       border-top:1px solid var(--stroke);
-      background: rgba(255,255,255,.55);
+      background: rgba(255,255,255,.60);
       display:flex; align-items:center; justify-content:space-between;
       gap:12px; flex-wrap:wrap;
       color:var(--muted);
-      font-size:13px;
-      line-height:1.6;
+      font-size:13px; line-height:1.6;
     }
   </style>
+
+  <script>
+    const FALLBACK_LOGO =
+      "data:image/svg+xml;charset=UTF-8," +
+      encodeURIComponent(`
+      <svg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 128 128'>
+        <defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+          <stop offset='0' stop-color='#1f74ff'/><stop offset='1' stop-color='#22b7ff'/>
+        </linearGradient></defs>
+        <rect x='8' y='8' width='112' height='112' rx='22' fill='white' stroke='#d6e7f7'/>
+        <path d='M64 22l6 18h19l-15 11 6 18-16-11-16 11 6-18-15-11h19z' fill='url(#g)'/>
+        <text x='64' y='98' text-anchor='middle' font-family='Arial' font-size='12' font-weight='700' fill='#0b1b2b'>POLARIS</text>
+      </svg>`);
+    window.addEventListener("DOMContentLoaded", () => {
+      const img = document.querySelector("img[data-logo='1']");
+      img.onerror = () => { img.src = FALLBACK_LOGO; img.onerror = null; };
+    });
+  </script>
 </head>
 
 <body>
   <div class="box">
     <div class="top">
-      <img src="assets/polaris-logo.png" alt="Polaris Science 로고">
+      <img data-logo="1" src="assets/polaris-logo.png" alt="Polaris Science 로고">
       <div>
         <div class="badge">✅ 결제가 완료되었습니다</div>
-        <div style="margin-top:6px; font-weight:900; letter-spacing:.2px;">POLARIS SCIENCE ACADEMY</div>
+        <div style="margin-top:6px; font-weight:950; letter-spacing:.2px;">POLARIS SCIENCE ACADEMY</div>
       </div>
     </div>
 
@@ -125,7 +124,7 @@
       <h1>결제 완료</h1>
       <p>
         결제가 정상적으로 처리되었습니다.<br/>
-        수강 확정/추가 안내가 필요한 경우, 안내 채널(문자/카톡/메일)로 확인 메시지를 드립니다.
+        수강 확정/추가 안내가 필요한 경우 안내 채널로 확인 메시지를 드립니다.
       </p>
 
       <div class="okmark">✔ 확인 완료 · 감사합니다!</div>
