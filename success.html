@@ -1,101 +1,19 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>결제 완료 | Polaris Science</title>
-  <style>
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans KR","맑은 고딕",sans-serif;background:#0b1220;color:rgba(255,255,255,.92)}
-    .wrap{max-width:720px;margin:0 auto;padding:28px 18px}
-    .card{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);border-radius:18px;padding:18px}
-    .muted{color:rgba(255,255,255,.65);font-size:13px;line-height:1.6}
-    .ok{font-weight:900;font-size:20px;margin:0 0 8px}
-    .btn{display:inline-block;margin-top:12px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#fff;text-decoration:none}
-    pre{white-space:pre-wrap;word-break:break-word;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.12);padding:12px;border-radius:12px}
-  </style>
+<meta charset="utf-8">
+<title>결제 완료</title>
 </head>
-<body>
-<div class="wrap">
-  <div class="card">
-    <p class="ok" id="title">결제 처리 중입니다…</p>
-    <p class="muted" id="msg">잠시만 기다려 주세요.</p>
-    <div id="detail" class="muted" style="margin-top:10px"></div>
-    <div style="margin-top:12px"><pre id="debug" class="muted"></pre></div>
-    <a class="btn" href="./">홈으로</a>
-    <a class="btn" href="./pay.html">다시 결제</a>
-  </div>
-</div>
 
-<script>
-  // ✅ 같은 도메인에 배포된 Vercel API 라우트 기준
-  const CONFIRM_ENDPOINT = "/api/confirm";
+<body style="background:#0b1220;color:white;font-family:sans-serif;padding:40px">
 
-  const qs = new URLSearchParams(location.search);
-  const paymentKey = qs.get("paymentKey");
-  const orderId = qs.get("orderId");
-  const amount = Number(qs.get("amount"));
+<h2>결제가 완료되었습니다.</h2>
 
-  const msg = document.getElementById("msg");
-  const title = document.getElementById("title");
-  const detail = document.getElementById("detail");
-  const debug = document.getElementById("debug");
+<p>Polaris Science</p>
 
-  function showDetail(){
-    const fields = ["studentName","className","payMonth","parentName","phone","memo"];
-    const lines = fields
-      .map(k => [k, qs.get(k)])
-      .filter(([,v]) => v && v.trim().length)
-      .map(([k,v]) => `• ${k}: ${v}`);
-    detail.textContent = lines.join("\n");
-    detail.style.whiteSpace = "pre-line";
-  }
-  showDetail();
+<p>등록 확인을 위해 학원으로 연락 주세요.</p>
 
-  async function confirm(){
-    debug.textContent =
-      `paymentKey=${paymentKey}\norderId=${orderId}\namount=${amount}\nendpoint=${CONFIRM_ENDPOINT}`;
+<a href="/">홈으로</a>
 
-    if(!paymentKey || !orderId || !amount){
-      title.textContent = "결제 정보 누락";
-      msg.textContent = "paymentKey/orderId/amount가 누락되었습니다. 결제를 다시 시도해 주세요.";
-      return;
-    }
-
-    try{
-      msg.textContent = "결제 승인(confirm) 요청 중…";
-
-      const res = await fetch(CONFIRM_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type":"application/json" },
-        body: JSON.stringify({
-          paymentKey,
-          orderId,
-          amount,
-          meta: Object.fromEntries(qs.entries())
-        })
-      });
-
-      const data = await res.json().catch(()=> ({}));
-
-      if(!res.ok){
-        title.textContent = "결제 승인 실패";
-        msg.textContent = `승인 실패: ${data?.message || data?.code || res.status}`;
-        debug.textContent += "\n\n" + JSON.stringify(data, null, 2);
-        return;
-      }
-
-      title.textContent = "결제가 완료되었습니다.";
-      msg.textContent = "등록 확인을 위해 학생명/수업명/결제월을 문자 또는 카톡으로 보내주세요.";
-      debug.textContent += "\n\n" + JSON.stringify(data, null, 2);
-
-    }catch(e){
-      title.textContent = "결제 승인 오류";
-      msg.textContent = "승인 처리 중 오류가 발생했습니다. 잠시 후 다시 확인해 주세요.";
-      debug.textContent += "\n\n" + String(e);
-    }
-  }
-
-  confirm();
-</script>
 </body>
 </html>
