@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>결제 안내 | Polaris Science Academy</title>
-  <meta name="description" content="폴라리스 사이언스 아카데미 결제 안내" />
+  <meta name="description" content="폴라리스(Polaris) 사이언스 결제 안내" />
   <style>
     :root{
       --bg1:#f7fbff; --bg2:#eaf6ff;
@@ -108,6 +108,16 @@
       border-radius: 12px; border:1px solid var(--stroke); background:#fff; padding:5px;
       margin-top:2px;
     }
+    .footer-box{
+      margin-top:10px;
+      padding:12px 14px;
+      border-radius:14px;
+      background: rgba(245,251,255,.95);
+      border:1px dashed #cbe2f7;
+      color:#2a4b63;
+      font-size:13px;
+      line-height:1.65;
+    }
   </style>
 
   <script>
@@ -115,12 +125,9 @@
       "data:image/svg+xml;charset=UTF-8," +
       encodeURIComponent(`
       <svg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 128 128'>
-        <defs>
-          <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
-            <stop offset='0' stop-color='#1f74ff'/>
-            <stop offset='1' stop-color='#22b7ff'/>
-          </linearGradient>
-        </defs>
+        <defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+          <stop offset='0' stop-color='#1f74ff'/><stop offset='1' stop-color='#22b7ff'/>
+        </linearGradient></defs>
         <rect x='8' y='8' width='112' height='112' rx='22' fill='white' stroke='#d6e7f7'/>
         <path d='M64 22l6 18h19l-15 11 6 18-16-11-16 11 6-18-15-11h19z' fill='url(#g)'/>
         <text x='64' y='98' text-anchor='middle' font-family='Arial' font-size='12' font-weight='700' fill='#0b1b2b'>POLARIS</text>
@@ -153,7 +160,6 @@
         <h1>결제 안내</h1>
         <p class="sub">
           결제 방식(계좌이체/카드/링크 결제 등)은 안내에 따라 진행됩니다.
-          결제 오류가 발생하면 실패 페이지 안내를 참고해주세요.
         </p>
       </div>
 
@@ -177,7 +183,8 @@
             <li>오류 발생 시 실패 페이지 안내에 따라 진행해 주세요</li>
           </ul>
           <div class="mutebox">
-            테스트 확인용: <a class="btn" href="./success.html" style="margin-right:8px;">성공 페이지</a>
+            테스트 확인용:
+            <a class="btn" href="./success.html" style="margin-left:8px; margin-right:8px;">성공 페이지</a>
             <a class="btn" href="./fail.html">실패 페이지</a>
           </div>
         </div>
@@ -196,13 +203,11 @@
           <h2>4) 사업자 정보 (토스페이먼츠 심사 필수)</h2>
           <p>아래 정보는 결제 심사 및 고지 의무를 위해 홈페이지에 반드시 표기됩니다.</p>
           <div class="mutebox">
-            상호명: 폴라리스 사이언스(Polaris Science Academy)<br/>
+            상호명: 폴라리스(Polaris) 사이언스<br/>
             대표자: 임서혁<br/>
-            사업자등록번호: <b>여기에 입력</b> (예: 000-00-00000)<br/>
-            주소: <b>여기에 입력</b><br/>
-            고객센터(연락처): <b>여기에 입력</b><br/>
-            이메일: <b>여기에 입력</b><br/>
-            (해당 시) 통신판매업 신고번호 / 학원(교습소) 등록번호: <b>여기에 입력</b>
+            사업자등록번호: 602-41-43692<br/>
+            주소: 서울특별시 송파구 백제고분로 170, 6층 B-01호<br/>
+            이메일: yio02@naver.com
           </div>
         </div>
       </div>
@@ -214,6 +219,11 @@
         <div class="note">
           <b>폴라리스 사이언스의 자세한 소식은 네이버블로그를 통해 접하실 수 있습니다.</b><br/>
           결제/공지/수업 일정 안내는 블로그에서 확인해주세요.
+          <div class="footer-box">
+            <b>[사업자 정보]</b><br/>
+            상호명: 폴라리스(Polaris) 사이언스 · 대표자: 임서혁 · 사업자등록번호: 602-41-43692<br/>
+            주소: 서울특별시 송파구 백제고분로 170, 6층 B-01호 · 이메일: yio02@naver.com
+          </div>
         </div>
       </div>
       <a class="btn primary" href="https://blog.naver.com/yio02" target="_blank" rel="noopener">네이버 블로그</a>
