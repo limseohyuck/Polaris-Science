@@ -2,30 +2,190 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Polaris Science | 수강료 결제</title>
+<meta name="description" content="Polaris Science 수강료 결제 및 환불 규정 안내">
 
 <script src="https://js.tosspayments.com/v2/standard"></script>
 
+<style>
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif;
+    background:linear-gradient(180deg,#050811 0%,#0b1220 100%);
+    color:#fff;
+    min-height:100vh;
+    padding:40px 20px;
+  }
+  .container{
+    max-width:860px;
+    margin:0 auto;
+  }
+  .top-link{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:10px 16px;
+    border-radius:999px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.12);
+    color:#eaf2ff;
+    text-decoration:none;
+    font-weight:700;
+    margin-bottom:18px;
+  }
+  .card{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.10);
+    border-radius:22px;
+    padding:34px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.35);
+    backdrop-filter:blur(6px);
+  }
+  .eyebrow{
+    font-size:13px;
+    letter-spacing:2px;
+    color:#9fb3d9;
+    margin-bottom:10px;
+  }
+  h1{
+    margin:0;
+    font-size:31px;
+    font-weight:800;
+  }
+  .desc{
+    margin:12px 0 0;
+    color:#c6d0e3;
+    font-size:15px;
+    line-height:1.7;
+  }
+  .section{
+    margin-top:24px;
+  }
+  label{
+    display:block;
+    font-size:14px;
+    color:#dbe5f6;
+    margin-bottom:8px;
+    font-weight:600;
+  }
+  select,input{
+    width:100%;
+    padding:14px 16px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.14);
+    background:#111a2e;
+    color:#fff;
+    font-size:15px;
+    outline:none;
+  }
+  select option{
+    color:#000;
+  }
+  .grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  .summary{
+    margin-top:6px;
+    padding:22px;
+    background:linear-gradient(180deg,rgba(255,255,255,0.05) 0%,rgba(255,255,255,0.03) 100%);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:16px;
+    line-height:1.8;
+  }
+  .summary h3,
+  .refund-box h3{
+    margin:0 0 14px 0;
+    font-size:18px;
+  }
+  .summary-grid{
+    display:grid;
+    grid-template-columns:140px 1fr;
+    gap:8px 12px;
+    font-size:15px;
+    color:#d9e2f2;
+  }
+  .summary-grid .head{
+    color:#93a6c7;
+  }
+  .amount{
+    font-weight:800;
+    color:#fff;
+  }
+  .refund-box{
+    margin-top:8px;
+    padding:22px;
+    background:#111a2e;
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:16px;
+    line-height:1.7;
+  }
+  .refund-box p,
+  .refund-box li{
+    color:#c6d0e3;
+  }
+  .refund-box ul{
+    padding-left:20px;
+    margin:0 0 15px 0;
+  }
+  .agree{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    cursor:pointer;
+    color:#eef3fb;
+  }
+  .agree input{
+    width:auto;
+    margin-top:4px;
+  }
+  .pay-btn{
+    width:100%;
+    padding:16px 20px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(90deg,#ffffff 0%,#dce7ff 100%);
+    color:#0b1220;
+    font-size:16px;
+    font-weight:800;
+    cursor:pointer;
+    box-shadow:0 10px 30px rgba(255,255,255,0.12);
+    margin-top:18px;
+  }
+  .notice{
+    margin-top:14px;
+    color:#95a8c8;
+    font-size:12.5px;
+    line-height:1.6;
+  }
+  @media (max-width:768px){
+    body{padding:24px 14px;}
+    .card{padding:22px;}
+    .grid-2{grid-template-columns:1fr;}
+    .summary-grid{grid-template-columns:110px 1fr;}
+    h1{font-size:26px;}
+  }
+</style>
 </head>
 
-<body style="margin:0;font-family:'Pretendard','Noto Sans KR',sans-serif;background:linear-gradient(180deg,#050811 0%,#0b1220 100%);color:white;padding:40px;min-height:100vh;box-sizing:border-box;">
+<body>
 
-<div style="max-width:820px;margin:0 auto;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:36px;box-shadow:0 20px 60px rgba(0,0,0,0.35);backdrop-filter:blur(6px);">
+<div class="container">
+  <a href="./index.html" class="top-link">← 홈으로 돌아가기</a>
 
-  <div style="margin-bottom:28px;">
-    <div style="font-size:13px;letter-spacing:2px;color:#9fb3d9;margin-bottom:10px;">POLARIS SCIENCE</div>
-    <h2 style="margin:0;font-size:30px;font-weight:700;">수강료 결제</h2>
-    <p style="margin:10px 0 0 0;color:#c6d0e3;font-size:15px;line-height:1.6;">
+  <div class="card">
+    <div class="eyebrow">POLARIS SCIENCE</div>
+    <h1>수강료 결제</h1>
+    <p class="desc">
       수강할 프로그램을 선택하고 결제 정보를 확인한 뒤 안전하게 결제를 진행해주세요.
     </p>
-  </div>
 
-  <div style="display:grid;grid-template-columns:1fr;gap:18px;">
-
-    <div>
-      <label style="display:block;font-size:14px;color:#dbe5f6;margin-bottom:8px;">수업 선택</label>
-      <select id="classSelect" onchange="updateSummary()" style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.14);background:#111a2e;color:white;font-size:15px;outline:none;box-sizing:border-box;">
+    <div class="section">
+      <label for="classSelect">수업 선택</label>
+      <select id="classSelect" onchange="updateSummary()">
         <option value="240000">중등 과학 개념/실험 기초반 4H (240,000원)</option>
         <option value="220000">중등 심화 / 고등 선행 통합 반 3H (220,000원)</option>
         <option value="220000">영재입시 중등심화 유형풀이 반 3H (220,000원)</option>
@@ -34,58 +194,55 @@
       </select>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div class="section grid-2">
       <div>
-        <label style="display:block;font-size:14px;color:#dbe5f6;margin-bottom:8px;">학생 이름</label>
-        <input id="studentName" placeholder="학생명을 입력하세요" oninput="updateSummary()" style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.14);background:#111a2e;color:white;font-size:15px;outline:none;box-sizing:border-box;">
+        <label for="studentName">학생 이름</label>
+        <input id="studentName" placeholder="학생명을 입력하세요" oninput="updateSummary()">
       </div>
       <div>
-        <label style="display:block;font-size:14px;color:#dbe5f6;margin-bottom:8px;">학부모 이름</label>
-        <input id="parentName" placeholder="학부모명을 입력하세요" oninput="updateSummary()" style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.14);background:#111a2e;color:white;font-size:15px;outline:none;box-sizing:border-box;">
-      </div>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-      <div>
-        <label style="display:block;font-size:14px;color:#dbe5f6;margin-bottom:8px;">연락처</label>
-        <input id="parentPhone" placeholder="예: 010-1234-5678" oninput="handlePhoneInput(this)" maxlength="13" style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.14);background:#111a2e;color:white;font-size:15px;outline:none;box-sizing:border-box;">
-      </div>
-      <div>
-        <label style="display:block;font-size:14px;color:#dbe5f6;margin-bottom:8px;">결제월</label>
-        <input id="payMonth" type="month" onchange="updateSummary()" style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.14);background:#111a2e;color:white;font-size:15px;outline:none;box-sizing:border-box;">
+        <label for="parentName">학부모 이름</label>
+        <input id="parentName" placeholder="학부모명을 입력하세요" oninput="updateSummary()">
       </div>
     </div>
 
-    <div style="margin-top:6px;padding:22px;background:linear-gradient(180deg,rgba(255,255,255,0.05) 0%,rgba(255,255,255,0.03) 100%);border:1px solid rgba(255,255,255,0.12);border-radius:16px;line-height:1.8;">
-      <h3 style="margin:0 0 14px 0;font-size:18px;">결제 정보 확인</h3>
+    <div class="section grid-2">
+      <div>
+        <label for="parentPhone">연락처</label>
+        <input id="parentPhone" placeholder="예: 010-1234-5678" oninput="handlePhoneInput(this)" maxlength="13">
+      </div>
+      <div>
+        <label for="payMonth">결제월</label>
+        <input id="payMonth" type="month" onchange="updateSummary()">
+      </div>
+    </div>
 
-      <div style="display:grid;grid-template-columns:140px 1fr;gap:8px 12px;font-size:15px;color:#d9e2f2;">
-        <div style="color:#93a6c7;">학생 이름</div>
+    <div class="summary">
+      <h3>결제 정보 확인</h3>
+      <div class="summary-grid">
+        <div class="head">학생 이름</div>
         <div id="summaryStudent">-</div>
 
-        <div style="color:#93a6c7;">학부모 이름</div>
+        <div class="head">학부모 이름</div>
         <div id="summaryParent">-</div>
 
-        <div style="color:#93a6c7;">연락처</div>
+        <div class="head">연락처</div>
         <div id="summaryPhone">-</div>
 
-        <div style="color:#93a6c7;">결제월</div>
+        <div class="head">결제월</div>
         <div id="summaryMonth">-</div>
 
-        <div style="color:#93a6c7;">선택 수업</div>
+        <div class="head">선택 수업</div>
         <div id="summaryClass">중등 과학 개념/실험 기초반 4H (240,000원)</div>
 
-        <div style="color:#93a6c7;">결제 금액</div>
-        <div id="summaryAmount" style="font-weight:700;color:#ffffff;">240,000원</div>
+        <div class="head">결제 금액</div>
+        <div id="summaryAmount" class="amount">240,000원</div>
       </div>
     </div>
 
-    <div style="margin-top:8px;padding:22px;background:#111a2e;border:1px solid rgba(255,255,255,0.12);border-radius:16px;line-height:1.7;">
-      <h3 style="margin-top:0;margin-bottom:12px;font-size:18px;">환불 규정</h3>
-      <p style="margin:0 0 10px 0;color:#dbe5f6;">
-        아래 환불 규정은 학원 운영 기준 및 관련 규정에 따라 적용됩니다.
-      </p>
-      <ul style="padding-left:20px;margin:0 0 15px 0;color:#c6d0e3;">
+    <div class="refund-box">
+      <h3>환불 규정</h3>
+      <p>아래 환불 규정은 학원 운영 기준 및 관련 규정에 따라 적용됩니다.</p>
+      <ul>
         <li>수업 시작 전 취소 시: 전액 환불</li>
         <li>총 수업시간의 1/3 경과 전: 수강료의 2/3 환불</li>
         <li>총 수업시간의 1/2 경과 전: 수강료의 1/2 환불</li>
@@ -93,120 +250,116 @@
         <li>교재비 및 재료비는 사용 여부에 따라 별도 공제될 수 있습니다.</li>
       </ul>
 
-      <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;color:#eef3fb;">
-        <input type="checkbox" id="refundAgree" style="margin-top:4px;">
+      <label class="agree">
+        <input type="checkbox" id="refundAgree">
         <span>위 환불 규정을 확인하였으며 이에 동의합니다.</span>
       </label>
     </div>
 
-    <div style="margin-top:4px;">
-      <button onclick="pay()" style="width:100%;padding:16px 20px;border:none;border-radius:14px;background:linear-gradient(90deg,#ffffff 0%,#dce7ff 100%);color:#0b1220;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 10px 30px rgba(255,255,255,0.12);">
-        결제하기
-      </button>
-    </div>
+    <button onclick="pay()" class="pay-btn">결제하기</button>
 
+    <div class="notice">
+      ※ 현재 코드의 clientKey는 테스트 키입니다. 실제 결제를 받으려면 토스페이먼츠의 실사용 클라이언트 키로 변경해야 합니다.
+    </div>
   </div>
 </div>
 
 <script>
+const clientKey = "test_ck_ZLKGPx4M3MqNM5RP5nAd3BaWypv1";
 
-const clientKey = "test_ck_ZLKGPx4M3MqNM5RP5nAd3BaWypv1"
-
-const tossPayments = TossPayments(clientKey)
-
+const tossPayments = TossPayments(clientKey);
 const payment = tossPayments.payment({
   customerKey: TossPayments.ANONYMOUS
-})
+});
 
 function makeOrderId(){
-  return "polaris_" + Date.now()
+  return "polaris_" + Date.now();
 }
 
 function formatAmount(value){
-  return Number(value).toLocaleString("ko-KR") + "원"
+  return Number(value).toLocaleString("ko-KR") + "원";
 }
 
 function formatPayMonth(value){
-  if(!value) return "-"
-  const parts = value.split("-")
-  if(parts.length !== 2) return value
-  return parts[0] + "년 " + Number(parts[1]) + "월"
+  if(!value) return "-";
+  const parts = value.split("-");
+  if(parts.length !== 2) return value;
+  return parts[0] + "년 " + Number(parts[1]) + "월";
 }
 
 function formatPhoneNumber(value){
-  const numbers = value.replace(/[^0-9]/g, "")
+  const numbers = value.replace(/[^0-9]/g, "");
 
   if(numbers.length < 4){
-    return numbers
+    return numbers;
   }else if(numbers.length < 8){
-    return numbers.slice(0,3) + "-" + numbers.slice(3)
+    return numbers.slice(0,3) + "-" + numbers.slice(3);
   }else{
-    return numbers.slice(0,3) + "-" + numbers.slice(3,7) + "-" + numbers.slice(7,11)
+    return numbers.slice(0,3) + "-" + numbers.slice(3,7) + "-" + numbers.slice(7,11);
   }
 }
 
 function handlePhoneInput(input){
-  input.value = formatPhoneNumber(input.value)
-  updateSummary()
+  input.value = formatPhoneNumber(input.value);
+  updateSummary();
 }
 
 function isValidPhoneNumber(phone){
-  return /^01[016789]-\d{3,4}-\d{4}$/.test(phone)
+  return /^01[016789]-\d{3,4}-\d{4}$/.test(phone);
 }
 
 function updateSummary(){
-  const classSelect = document.getElementById("classSelect")
-  const selectedText = classSelect.options[classSelect.selectedIndex].text
-  const amount = classSelect.value
+  const classSelect = document.getElementById("classSelect");
+  const selectedText = classSelect.options[classSelect.selectedIndex].text;
+  const amount = classSelect.value;
 
-  const student = document.getElementById("studentName").value.trim()
-  const parent = document.getElementById("parentName").value.trim()
-  const phone = document.getElementById("parentPhone").value.trim()
-  const payMonth = document.getElementById("payMonth").value
+  const student = document.getElementById("studentName").value.trim();
+  const parent = document.getElementById("parentName").value.trim();
+  const phone = document.getElementById("parentPhone").value.trim();
+  const payMonth = document.getElementById("payMonth").value;
 
-  document.getElementById("summaryStudent").innerText = student || "-"
-  document.getElementById("summaryParent").innerText = parent || "-"
-  document.getElementById("summaryPhone").innerText = phone || "-"
-  document.getElementById("summaryMonth").innerText = formatPayMonth(payMonth)
-  document.getElementById("summaryClass").innerText = selectedText
-  document.getElementById("summaryAmount").innerText = formatAmount(amount)
+  document.getElementById("summaryStudent").innerText = student || "-";
+  document.getElementById("summaryParent").innerText = parent || "-";
+  document.getElementById("summaryPhone").innerText = phone || "-";
+  document.getElementById("summaryMonth").innerText = formatPayMonth(payMonth);
+  document.getElementById("summaryClass").innerText = selectedText;
+  document.getElementById("summaryAmount").innerText = formatAmount(amount);
 }
 
 async function pay(){
+  const classSelect = document.getElementById("classSelect");
+  const amount = Number(classSelect.value);
+  const selectedClassName = classSelect.options[classSelect.selectedIndex].text;
 
-  const classSelect = document.getElementById("classSelect")
-  const amount = Number(classSelect.value)
-  const selectedClassName = classSelect.options[classSelect.selectedIndex].text
-
-  const student = document.getElementById("studentName").value.trim()
-  const parent = document.getElementById("parentName").value.trim()
-  const phone = document.getElementById("parentPhone").value.trim()
-  const payMonth = document.getElementById("payMonth").value
-  const refundAgree = document.getElementById("refundAgree").checked
+  const student = document.getElementById("studentName").value.trim();
+  const parent = document.getElementById("parentName").value.trim();
+  const phone = document.getElementById("parentPhone").value.trim();
+  const payMonth = document.getElementById("payMonth").value;
+  const refundAgree = document.getElementById("refundAgree").checked;
 
   if(!student || !parent){
-    alert("학생명과 학부모명을 입력하세요")
-    return
+    alert("학생명과 학부모명을 입력하세요");
+    return;
   }
 
   if(!phone){
-    alert("연락처를 입력하세요")
-    return
+    alert("연락처를 입력하세요");
+    return;
   }
 
   if(!isValidPhoneNumber(phone)){
-    alert("학부모 연락처를 정확히 입력해주세요. 예: 010-1234-5678")
-    return
+    alert("학부모 연락처를 정확히 입력해주세요. 예: 010-1234-5678");
+    return;
   }
 
   if(!payMonth){
-    alert("결제월을 선택하세요")
-    return
+    alert("결제월을 선택하세요");
+    return;
   }
 
   if(!refundAgree){
-    alert("환불 규정에 동의해주세요")
-    return
+    alert("환불 규정에 동의해주세요");
+    return;
   }
 
   const confirmMessage =
@@ -216,40 +369,32 @@ async function pay(){
     "연락처: " + phone + "\n" +
     "결제월: " + formatPayMonth(payMonth) + "\n" +
     "선택 수업: " + selectedClassName + "\n" +
-    "결제 금액: " + formatAmount(amount)
+    "결제 금액: " + formatAmount(amount);
 
-  const isConfirmed = confirm(confirmMessage)
+  const isConfirmed = confirm(confirmMessage);
 
   if(!isConfirmed){
-    return
+    return;
   }
 
-  const orderId = makeOrderId()
-  const orderName = "Polaris Science | " + student + " | " + formatPayMonth(payMonth)
+  const orderId = makeOrderId();
+  const orderName = "Polaris Science | " + student + " | " + formatPayMonth(payMonth);
 
   await payment.requestPayment({
-    method:"CARD",
-
-    amount:{
-      currency:"KRW",
-      value:amount
+    method: "CARD",
+    amount: {
+      currency: "KRW",
+      value: amount
     },
-
-    orderId:orderId,
-
-    orderName:orderName,
-
-    successUrl:window.location.origin + "/success.html",
-
-    failUrl:window.location.origin + "/fail.html",
-
-    customerName:parent
-  })
-
+    orderId: orderId,
+    orderName: orderName,
+    successUrl: window.location.origin + "/success.html",
+    failUrl: window.location.origin + "/fail.html",
+    customerName: parent
+  });
 }
 
-updateSummary()
-
+updateSummary();
 </script>
 
 </body>
